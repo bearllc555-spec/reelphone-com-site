@@ -33,6 +33,16 @@
     font-feature-settings:"ss01","cv11";letter-spacing:-.005em;
   }
   .wrap{max-width:560px;width:100%;text-align:center}
+  .logo{
+    display:inline-block;
+    width:88px;height:88px;
+    margin-bottom:22px;
+    color:var(--ink);
+  }
+  .logo svg{width:100%;height:100%;display:block}
+  @media (max-width:480px){
+    .logo{width:72px;height:72px;margin-bottom:18px}
+  }
   .brand{
     display:inline-flex;align-items:baseline;
     font-weight:800;font-size:30px;letter-spacing:-.03em;
@@ -86,6 +96,28 @@
 </head>
 <body>
 <main class="wrap">
+  <div class="logo" aria-label="reelphone logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Left sound waves (three arcs) -->
+      <path d="M64 102 A 18 24 0 0 0 64 138" stroke-width="6"/>
+      <path d="M48 90  A 32 42 0 0 0 48 150" stroke-width="6"/>
+      <path d="M32 78  A 46 60 0 0 0 32 162" stroke-width="6"/>
+      <!-- Right sound waves -->
+      <path d="M176 102 A 18 24 0 0 1 176 138" stroke-width="6"/>
+      <path d="M192 90  A 32 42 0 0 1 192 150" stroke-width="6"/>
+      <path d="M208 78  A 46 60 0 0 1 208 162" stroke-width="6"/>
+      <!-- Phone body -->
+      <rect x="82" y="28" width="76" height="184" rx="14" ry="14" fill="currentColor" stroke="none"/>
+      <!-- Screen -->
+      <rect x="89" y="52" width="62" height="128" rx="2" ry="2" fill="#fff" stroke="none"/>
+      <!-- Speaker slit on bezel -->
+      <rect x="111" y="40" width="18" height="4" rx="2" ry="2" fill="#fff" stroke="none"/>
+      <!-- Home button -->
+      <circle cx="120" cy="196" r="6" fill="none" stroke="#fff" stroke-width="2.5"/>
+      <!-- Play triangle on screen -->
+      <path d="M114 96 L114 136 L140 116 Z" fill="currentColor" stroke="none"/>
+    </svg>
+  </div>
   <span class="brand"><span class="word">reelphone</span><span class="ver">v01</span></span>
   <div><span class="eyebrow"><span class="pulse"></span>in build · coming soon</span></div>
   <h1>something is <em>coming.</em></h1>
