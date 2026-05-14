@@ -3,9 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>reelphone — coming soon</title>
-<meta name="description" content="Something is coming. A new bear llc property, quietly under construction.">
-<meta name="robots" content="noindex,nofollow">
+<title>reelphone - a dedicated device for UGC-style content</title>
+<meta name="description" content="ReelPhone is a dedicated device and service that turns product photos into UGC-style short-form videos and posts them to your social accounts. Built for DTC brands and UGC agencies.">
+<meta property="og:title" content="reelphone - a dedicated device for UGC-style content">
+<meta property="og:description" content="Send a product photo. We turn it into UGC videos and post them for you.">
+<meta property="og:url" content="https://reelphone.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="reelphone - a dedicated device for UGC-style content">
+<meta name="twitter:description" content="Send a product photo. We turn it into UGC videos and post them for you.">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -31,20 +37,20 @@
     color:var(--ink);
     -webkit-font-smoothing:antialiased;
     display:flex;align-items:center;justify-content:center;
-    padding:24px;line-height:1.5;
+    padding:48px 24px;line-height:1.5;
     font-feature-settings:"ss01","cv11";letter-spacing:-.005em;
   }
-  .wrap{max-width:560px;width:100%;text-align:center}
+  .wrap{max-width:640px;width:100%;text-align:center}
   .logo{
     display:block;
-    width:140px;height:140px;
+    width:120px;height:120px;
     margin:0 auto 6px;
     color:var(--ink);
   }
   .logo img{
     width:100%;height:100%;display:block;object-fit:contain;
     transform-origin:50% 50%;
-    animation:phone-ring 3s ease-out .35s 2 both;
+    animation:phone-ring 3s ease-out .35s 1 both;
   }
   @keyframes phone-ring{
     0%,100%{transform:translateX(0) rotate(0)}
@@ -65,16 +71,15 @@
     .logo img{animation:none}
   }
   @media (max-width:480px){
-    .logo{width:108px;height:108px;margin-bottom:4px}
+    .logo{width:96px;height:96px}
   }
   .brand{
     display:inline-flex;align-items:baseline;
     font-weight:800;font-size:30px;letter-spacing:-.03em;
     color:var(--ink);line-height:1;
-    margin-bottom:36px;text-decoration:none;
+    margin-bottom:28px;text-decoration:none;
   }
   .brand .word{font-weight:800;color:var(--ink);text-transform:lowercase}
-  .brand .word .dot{color:var(--blue);font-weight:800}
   .brand .ver{font-size:10.5px;font-weight:600;color:var(--slate);margin-left:8px;letter-spacing:0;align-self:center}
   .eyebrow{
     display:inline-flex;align-items:center;gap:.55rem;
@@ -84,7 +89,7 @@
     background:var(--blue-soft);
     padding:.45rem .9rem;
     border-radius:999px;
-    margin-bottom:22px;
+    margin-bottom:24px;
   }
   .eyebrow .pulse{
     width:7px;height:7px;border-radius:50%;
@@ -99,36 +104,106 @@
     font-size:38px;
     font-weight:700;
     letter-spacing:-.025em;
-    line-height:1.15;
+    line-height:1.18;
     color:var(--ink);
-    margin-bottom:18px;
+    margin-bottom:20px;
     text-transform:lowercase;
+    text-wrap:balance;
   }
   h1 em{font-style:normal;color:var(--blue);font-weight:700}
-  h1 .slash{color:var(--blue);font-weight:800;letter-spacing:-.05em}
   p.lead{
     font-size:16.5px;color:var(--ink-soft);
-    max-width:42ch;margin:0 auto 36px;line-height:1.6;
+    max-width:54ch;margin:0 auto 32px;line-height:1.6;
+    text-wrap:pretty;
   }
+  .cta-row{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:20px;margin-bottom:40px;
+  }
+  .btn-primary{
+    display:inline-flex;align-items:center;justify-content:center;gap:.45rem;
+    background:var(--blue);color:#fff;
+    font-weight:700;font-size:15px;letter-spacing:-.005em;
+    padding:14px 28px;
+    border-radius:999px;
+    text-decoration:none;
+    border:1px solid var(--blue);
+    box-shadow:0 1px 0 rgba(0,0,0,.04),0 8px 24px rgba(37,99,235,.18);
+    transition:background .15s ease, transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .btn-primary:hover{
+    background:var(--blue-deep);border-color:var(--blue-deep);
+    box-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 28px rgba(37,99,235,.26);
+    transform:translateY(-1px);
+  }
+  .btn-primary:active{transform:translateY(0)}
+  .btn-primary .arrow{transition:transform .15s ease;display:inline-block}
+  .btn-primary:hover .arrow{transform:translateX(2px)}
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:.3rem;
+    color:var(--blue);font-weight:600;font-size:14.5px;
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    padding:4px 2px;
+    transition:border-color .15s ease;
+  }
+  .btn-secondary:hover{border-color:var(--blue)}
+  .stats{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+    gap:10px;
+    font-size:13px;color:var(--slate);
+    line-height:1.5;letter-spacing:-.005em;
+  }
+  .stat{
+    display:inline-flex;align-items:center;gap:.5rem;
+    padding:8px 14px;
+    border:1px solid var(--rule);
+    border-radius:999px;
+    background:#fff;
+  }
+  .stat::before{
+    content:"";
+    width:6px;height:6px;border-radius:50%;
+    background:var(--blue);
+    flex-shrink:0;
+  }
+  .stat strong{color:var(--ink);font-weight:600}
   .footer{
-    margin-top:56px;padding-top:28px;
+    margin-top:48px;padding-top:24px;
     border-top:1px solid var(--rule);
     font-size:12.5px;color:var(--slate);
     line-height:1.7;
   }
-  .footer .mark-dot{color:var(--blue);font-weight:700}
+  @media (max-width:560px){
+    body{padding:32px 20px}
+    h1{font-size:30px;line-height:1.22}
+    p.lead{font-size:15.5px}
+    .cta-row{gap:16px;flex-direction:column}
+    .btn-primary{width:100%;max-width:300px;padding:15px 24px}
+    .stats{gap:8px}
+    .stat{font-size:12.5px;padding:7px 12px}
+  }
 </style>
 </head>
 <body>
 <main class="wrap">
   <div class="logo">
-    <img src="/reel-phone-logo-01.png" alt="reelphone logo" width="140" height="140" />
+    <img src="/reel-phone-logo-01.png" alt="reelphone logo" width="120" height="120" />
   </div>
-  <span class="brand"><span class="word">reelphone</span><span class="ver">v14</span></span>
-  <div><span class="eyebrow"><span class="pulse"></span>in build · coming soon</span></div>
-  <h1><span class="slash">/</span>something is <em>coming.</em></h1>
-  <p class="lead">a new bear llc property. quietly under construction.</p>
-  <div class="footer">reelphone.com &copy; 2026 · a bear llc digital property</div>
+  <span class="brand"><span class="word">reelphone</span><span class="ver">v15</span></span>
+  <div><span class="eyebrow"><span class="pulse"></span>now booking demos</span></div>
+  <h1>send a product photo. we turn it into <em>posted ugc videos.</em></h1>
+  <p class="lead">A dedicated device and service that turns your product photos into UGC-style short-form videos, posts them to your connected social accounts, and reports back with links and status. Built for DTC brands and UGC agencies.</p>
+  <div class="cta-row">
+    <a class="btn-primary" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request&body=Company%3A%20%0AWebsite%3A%20%0AWhat%20you%27re%20trying%20to%20get%20done%3A%20%0ABest%20time%20to%20chat%3A%20">Book a demo<span class="arrow">&rarr;</span></a>
+    <a class="btn-secondary" href="mailto:hello@reelphone.com?subject=ReelPhone%20order%20-%20first%20device&body=Company%3A%20%0AShip-to%20address%3A%20%0AHow%20many%20phones%3A%20">or, start an order &rarr;</a>
+  </div>
+  <div class="stats">
+    <span class="stat"><strong>Up to 90</strong> UGC videos / mo per phone</span>
+    <span class="stat"><strong>Dedicated</strong> device + service</span>
+    <span class="stat"><strong>From $1,997</strong> setup &middot; $1,750-$2,000/mo</span>
+  </div>
+  <div class="footer">reelphone.com &copy; 2026 &middot; a bear llc digital property</div>
 </main>
 </body>
 </html>
