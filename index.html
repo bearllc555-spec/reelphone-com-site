@@ -60,12 +60,25 @@
   }
   main, header, footer{position:relative;z-index:1}
 
+  /* ----- Temp version tracker (remove before launch) ----- */
+  .version-band{
+    position:sticky;top:0;z-index:80;
+    background:#FF3B30;color:#fff;
+    text-align:center;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:13px;font-weight:700;
+    letter-spacing:.06em;
+    padding:6px 12px;
+    box-shadow:0 2px 6px rgba(0,0,0,.18);
+  }
+  .version-band .meta{font-weight:500;opacity:.85;margin-left:8px;font-size:11.5px}
+
   /* ----- Layout ----- */
   .container{max-width:1180px;margin:0 auto;padding:0 28px}
 
   /* ----- Header ----- */
   header.top{
-    position:sticky;top:0;z-index:50;
+    position:sticky;top:32px;z-index:50;
     backdrop-filter:saturate(160%) blur(14px);
     -webkit-backdrop-filter:saturate(160%) blur(14px);
     background:rgba(244,246,251,.72);
@@ -282,12 +295,12 @@
   }
   .upload-lines .line{
     stroke:url(#lineGrad);
-    stroke-width:2.8;
+    stroke-width:3.5;
     fill:none;
-    stroke-dasharray:4.5 3;
+    stroke-dasharray:5 3.2;
     stroke-linecap:round;
     animation:flow 1.6s linear infinite;
-    filter:drop-shadow(0 0 6px rgba(37,99,235,.65));
+    filter:drop-shadow(0 0 7px rgba(37,99,235,.7));
   }
   .upload-lines .line-2{animation-duration:1.6s;animation-delay:.15s}
   .upload-lines .line-3{animation-duration:2s;animation-delay:.3s}
@@ -607,9 +620,11 @@
 </head>
 <body>
 
+<div class="version-band">v023<span class="meta">temp build tracker - remove before launch</span></div>
+
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v22</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v23</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -648,7 +663,7 @@
           </defs>
           <path class="line line-1" d="M 50 52.5 Q 28 39.9 6 31.5"/>
           <path class="line line-2" d="M 50 52.5 Q 38 29.4 27 11.55"/>
-          <path class="line line-3" d="M 50 52.5 L 50 5.25"/>
+          <line class="line line-3" x1="50" y1="52.5" x2="50" y2="5.25"/>
           <path class="line line-4" d="M 50 52.5 Q 62 29.4 73 11.55"/>
           <path class="line line-5" d="M 50 52.5 Q 72 39.9 94 31.5"/>
         </svg>
