@@ -282,12 +282,12 @@
   }
   .upload-lines .line{
     stroke:url(#lineGrad);
-    stroke-width:1.5;
+    stroke-width:2.8;
     fill:none;
-    stroke-dasharray:3 2.4;
+    stroke-dasharray:4.5 3;
     stroke-linecap:round;
     animation:flow 1.6s linear infinite;
-    filter:drop-shadow(0 0 5px rgba(37,99,235,.55));
+    filter:drop-shadow(0 0 6px rgba(37,99,235,.65));
   }
   .upload-lines .line-2{animation-duration:1.6s;animation-delay:.15s}
   .upload-lines .line-3{animation-duration:2s;animation-delay:.3s}
@@ -295,7 +295,7 @@
   .upload-lines .line-5{animation-duration:1.9s;animation-delay:.6s}
   @keyframes flow{
     from{stroke-dashoffset:0}
-    to{stroke-dashoffset:-10.8}
+    to{stroke-dashoffset:-15}
   }
 
   /* Broadcast origin dot — sits where lines emerge from phone */
@@ -609,7 +609,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v21</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v22</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -642,8 +642,8 @@
         <svg class="upload-lines" viewBox="0 0 100 105" aria-hidden="true">
           <defs>
             <linearGradient id="lineGrad" x1="50%" y1="100%" x2="50%" y2="0%">
-              <stop offset="0%" stop-color="#2563EB" stop-opacity=".95"/>
-              <stop offset="100%" stop-color="#3B82F6" stop-opacity=".65"/>
+              <stop offset="0%" stop-color="#1D4ED8" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#3B82F6" stop-opacity="1"/>
             </linearGradient>
           </defs>
           <path class="line line-1" d="M 50 52.5 Q 28 39.9 6 31.5"/>
