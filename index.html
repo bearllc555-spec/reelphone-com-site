@@ -235,29 +235,23 @@
   }
   .orbit-icon{
     position:absolute;
-    width:54px;height:54px;
-    border-radius:14px;
-    overflow:hidden;
-    background:#fff;
-    box-shadow:
-      0 12px 28px rgba(15,23,42,.16),
-      0 2px 6px rgba(15,23,42,.06),
-      0 0 0 1px rgba(15,23,42,.04);
+    width:58px;height:58px;
     display:block;
     transform:translate(-50%,-50%);
-    transition:box-shadow .25s ease, scale .25s ease;
+    filter:
+      drop-shadow(0 14px 28px rgba(15,23,42,.18))
+      drop-shadow(0 2px 4px rgba(15,23,42,.08));
+    transition:scale .25s ease, filter .25s ease;
     pointer-events:auto;
   }
   .orbit-icon:hover{
     scale:1.08;
-    box-shadow:
-      0 18px 36px rgba(15,23,42,.22),
-      0 2px 6px rgba(15,23,42,.08),
-      0 0 0 1px rgba(15,23,42,.06);
+    filter:
+      drop-shadow(0 20px 36px rgba(15,23,42,.24))
+      drop-shadow(0 2px 4px rgba(15,23,42,.10));
   }
-  .orbit-icon img{
+  .orbit-icon > svg{
     width:100%;height:100%;display:block;
-    object-fit:cover;
   }
   .orbit-icon.orbit-1{top:32%;left:6%;animation:bob 5s ease-in-out infinite}
   .orbit-icon.orbit-2{top:13%;left:27%;animation:bob 5.4s ease-in-out infinite .3s}
@@ -288,12 +282,12 @@
   }
   .upload-lines .line{
     stroke:url(#lineGrad);
-    stroke-width:1.1;
+    stroke-width:1.5;
     fill:none;
-    stroke-dasharray:2 2.6;
+    stroke-dasharray:3 2.4;
     stroke-linecap:round;
-    animation:flow 1.8s linear infinite;
-    filter:drop-shadow(0 0 3px rgba(37,99,235,.35));
+    animation:flow 1.6s linear infinite;
+    filter:drop-shadow(0 0 5px rgba(37,99,235,.55));
   }
   .upload-lines .line-2{animation-duration:1.6s;animation-delay:.15s}
   .upload-lines .line-3{animation-duration:2s;animation-delay:.3s}
@@ -301,7 +295,7 @@
   .upload-lines .line-5{animation-duration:1.9s;animation-delay:.6s}
   @keyframes flow{
     from{stroke-dashoffset:0}
-    to{stroke-dashoffset:-9.2}
+    to{stroke-dashoffset:-10.8}
   }
 
   /* Broadcast origin dot — sits where lines emerge from phone */
@@ -597,8 +591,7 @@
     .hero h1{font-size:clamp(34px,9vw,46px)}
     .steps{grid-template-columns:1fr}
     .phone-card{width:56%;max-width:280px;padding:8px;border-radius:18px}
-    .orbit-icon{width:40px;height:40px}
-    .orbit-icon svg{width:20px;height:20px}
+    .orbit-icon{width:44px;height:44px}
     .orbit-icon.orbit-1{top:28%;left:5%}
     .orbit-icon.orbit-2{top:11%;left:24%}
     .orbit-icon.orbit-3{top:4%;left:50%}
@@ -616,7 +609,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v20</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v21</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -663,20 +656,47 @@
         <span class="broadcast-dot" aria-hidden="true"></span>
 
         <div class="upload-orbit" aria-label="ReelPhone posts videos to Facebook, Instagram, TikTok, YouTube, and X.com">
-          <span class="orbit-icon orbit-1" title="Facebook">
-            <img src="/images/buttons/facebook-button.png" alt="Facebook" loading="lazy">
+          <span class="orbit-icon orbit-1" title="Facebook" role="img" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5.5" fill="#1877F2"/>
+              <path fill="#fff" d="M14.04 12.86V20.5H10.6V12.86H8V10h2.6V8.06c0-2.13 1.27-3.31 3.21-3.31.92 0 1.86.16 1.86.16v2.04h-1.05c-1.03 0-1.36.64-1.36 1.3v1.74h2.32l-.37 2.87h-1.95z"/>
+            </svg>
           </span>
-          <span class="orbit-icon orbit-2" title="Instagram">
-            <img src="/images/buttons/instagram-button.png" alt="Instagram" loading="lazy">
+          <span class="orbit-icon orbit-2" title="Instagram" role="img" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <defs>
+                <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FBBF24"/>
+                  <stop offset="30%" stop-color="#F58529"/>
+                  <stop offset="60%" stop-color="#DD2A7B"/>
+                  <stop offset="100%" stop-color="#8134AF"/>
+                </linearGradient>
+              </defs>
+              <rect width="24" height="24" rx="5.5" fill="url(#ig-grad)"/>
+              <rect x="6.2" y="6.2" width="11.6" height="11.6" rx="3" fill="none" stroke="#fff" stroke-width="1.7"/>
+              <circle cx="12" cy="12" r="2.7" fill="none" stroke="#fff" stroke-width="1.7"/>
+              <circle cx="16.4" cy="7.6" r="0.9" fill="#fff"/>
+            </svg>
           </span>
-          <span class="orbit-icon orbit-3" title="TikTok">
-            <img src="/images/buttons/tiktok-button.jpg" alt="TikTok" loading="lazy">
+          <span class="orbit-icon orbit-3" title="TikTok" role="img" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5.5" fill="#000"/>
+              <path fill="#25F4EE" d="M16.1 4.45c-.4 0-.78-.07-1.12-.21-.07.85-.6 1.56-1.36 1.93v8.97c0 1.36-1.1 2.46-2.46 2.46s-2.46-1.1-2.46-2.46c0-1.36 1.1-2.46 2.46-2.46.13 0 .25.01.37.03v-2.47c-.12-.01-.24-.02-.37-.02-2.71 0-4.91 2.2-4.91 4.92 0 2.71 2.2 4.91 4.91 4.91 2.72 0 4.92-2.2 4.92-4.91V9.16c.97.62 2.12.96 3.34.95V7.64c-2.04 0-3.31-1.42-3.31-3.19z"/>
+              <path fill="#FE2C55" d="M16.7 5.05c-.4 0-.78-.07-1.12-.21-.07.85-.6 1.56-1.36 1.93v8.97c0 1.36-1.1 2.46-2.46 2.46s-2.46-1.1-2.46-2.46c0-1.36 1.1-2.46 2.46-2.46.13 0 .25.01.37.03v-2.47c-.12-.01-.24-.02-.37-.02-2.71 0-4.91 2.2-4.91 4.92 0 2.71 2.2 4.91 4.91 4.91 2.72 0 4.92-2.2 4.92-4.91V9.76c.97.62 2.12.96 3.34.95V8.24c-2.04 0-3.31-1.42-3.31-3.19z" opacity=".85"/>
+              <path fill="#fff" d="M16.4 4.75c-.4 0-.78-.07-1.12-.21-.07.85-.6 1.56-1.36 1.93v8.97c0 1.36-1.1 2.46-2.46 2.46s-2.46-1.1-2.46-2.46c0-1.36 1.1-2.46 2.46-2.46.13 0 .25.01.37.03v-2.47c-.12-.01-.24-.02-.37-.02-2.71 0-4.91 2.2-4.91 4.92 0 2.71 2.2 4.91 4.91 4.91 2.72 0 4.92-2.2 4.92-4.91V9.46c.97.62 2.12.96 3.34.95V7.94c-2.04 0-3.31-1.42-3.31-3.19z"/>
+            </svg>
           </span>
-          <span class="orbit-icon orbit-4" title="YouTube">
-            <img src="/images/buttons/YouTube-button.jpg" alt="YouTube" loading="lazy">
+          <span class="orbit-icon orbit-4" title="YouTube" role="img" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5.5" fill="#FF0000"/>
+              <path fill="#fff" d="M10 8v8l6.4-4z"/>
+            </svg>
           </span>
-          <span class="orbit-icon orbit-5" title="X.com">
-            <img src="/images/buttons/X-button.jpg" alt="X.com" loading="lazy">
+          <span class="orbit-icon orbit-5" title="X.com" role="img" aria-label="X.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect width="24" height="24" rx="5.5" fill="#000"/>
+              <path fill="#fff" d="M16.99 5h2.46l-5.37 6.14L20.4 19h-4.94l-3.87-5.06L7.16 19H4.7l5.74-6.56L4.4 5h5.06l3.5 4.62L16.99 5zm-.86 12.46h1.36L8.85 6.45H7.39l8.74 11.01z"/>
+            </svg>
           </span>
         </div>
 
