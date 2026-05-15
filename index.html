@@ -295,12 +295,12 @@
   }
   .upload-lines .line{
     stroke:url(#lineGrad);
-    stroke-width:.05;
+    stroke-width:1.0;
     fill:none;
-    stroke-dasharray:5 3.2;
+    stroke-dasharray:3 2.4;
     stroke-linecap:round;
     animation:flow 1.6s linear infinite;
-    filter:drop-shadow(0 0 7px rgba(37,99,235,.7));
+    filter:drop-shadow(0 0 5px rgba(37,99,235,.55));
   }
   .upload-lines .line-2{animation-duration:1.6s;animation-delay:.15s}
   .upload-lines .line-3{animation-duration:2s;animation-delay:.3s}
@@ -620,11 +620,11 @@
 </head>
 <body>
 
-<div class="version-band">v024<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v025<span class="meta">temp build tracker - remove before launch</span></div>
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v24</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v25</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -663,7 +663,7 @@
           </defs>
           <path class="line line-1" d="M 50 52.5 Q 28 39.9 6 31.5"/>
           <path class="line line-2" d="M 50 52.5 Q 38 29.4 27 11.55"/>
-          <line class="line line-3" x1="50" y1="52.5" x2="50" y2="5.25"/>
+          <path class="line line-3" d="M 50 52.5 C 50.5 36 49.5 22 50 5.25"/>
           <path class="line line-4" d="M 50 52.5 Q 62 29.4 73 11.55"/>
           <path class="line line-5" d="M 50 52.5 Q 72 39.9 94 31.5"/>
         </svg>
