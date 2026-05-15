@@ -274,13 +274,32 @@
   }
   .orbit-icon[title]::after{
     content:attr(title);
-    position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);
-    font-size:10.5px;font-weight:600;color:var(--slate);
-    letter-spacing:.02em;text-transform:uppercase;
-    opacity:0;transition:opacity .2s ease;
+    position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
+    font-size:11px;font-weight:700;color:var(--ink);
+    letter-spacing:.06em;text-transform:uppercase;
+    opacity:0;
     white-space:nowrap;pointer-events:none;
   }
-  .orbit-icon:hover::after{opacity:1}
+  /* Auto-cycle labels for upper 5 broadcast targets, left to right */
+  .orbit-icon.orbit-1::after,
+  .orbit-icon.orbit-2::after,
+  .orbit-icon.orbit-3::after,
+  .orbit-icon.orbit-4::after,
+  .orbit-icon.orbit-5::after{
+    animation:label-cycle 2.5s linear infinite;
+  }
+  .orbit-icon.orbit-1::after{animation-delay:0s}
+  .orbit-icon.orbit-2::after{animation-delay:.5s}
+  .orbit-icon.orbit-3::after{animation-delay:1s}
+  .orbit-icon.orbit-4::after{animation-delay:1.5s}
+  .orbit-icon.orbit-5::after{animation-delay:2s}
+  @keyframes label-cycle{
+    0%, 20%, 100% { opacity:0; }
+    3%, 17%       { opacity:1; }
+  }
+  /* Telegram and WhatsApp still use hover behavior */
+  .orbit-icon.orbit-6:hover::after,
+  .orbit-icon.orbit-7:hover::after{opacity:1;transition:opacity .2s ease}
 
   /* Upload signal lines */
   .upload-lines{
@@ -330,6 +349,7 @@
     .upload-lines .line{animation:none}
     .broadcast-dot{animation:none}
     .orbit-icon{animation:none}
+    .orbit-icon[title]::after{animation:none}
     .eyebrow .pulse{animation:none}
   }
 
@@ -621,7 +641,7 @@
 </head>
 <body>
 
-<div class="version-band">v040<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v041<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -637,7 +657,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v40</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v41</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
