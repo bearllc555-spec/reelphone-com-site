@@ -288,6 +288,59 @@
     0%,100%{transform:translate(-50%,-50%)}
     50%{transform:translate(-50%,calc(-50% - 4px))}
   }
+  /* Icon reacts when the pulse dot arrives (top 5) or leaves (bottom 2).
+     Inner svg gets a squash-and-stretch punch; ::before draws an emerald
+     halo ring that expands outward, telling the "packet delivered" story.
+     Per-icon delays are synced to each pulse-N animation-delay. */
+  .orbit-icon > svg{transform-origin:50% 50%}
+  .orbit-icon.orbit-1 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2s}
+  .orbit-icon.orbit-2 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2.3s}
+  .orbit-icon.orbit-3 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2.6s}
+  .orbit-icon.orbit-4 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2.9s}
+  .orbit-icon.orbit-5 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 3.2s}
+  .orbit-icon.orbit-6 > svg,
+  .orbit-icon.orbit-7 > svg{animation:icon-launch 2.5s cubic-bezier(.34,1.56,.64,1) infinite}
+  @keyframes icon-receive{
+    0%,76%{scale:1;rotate:0deg}
+    82%{scale:1.28;rotate:-3deg}
+    88%{scale:.92;rotate:2deg}
+    94%{scale:1.06;rotate:-1deg}
+    100%{scale:1;rotate:0deg}
+  }
+  @keyframes icon-launch{
+    0%{scale:1;rotate:0deg}
+    6%{scale:1.22;rotate:3deg}
+    14%{scale:.94;rotate:-2deg}
+    22%{scale:1.05;rotate:1deg}
+    30%,100%{scale:1;rotate:0deg}
+  }
+  .orbit-icon::before{
+    content:"";
+    position:absolute;inset:-4px;
+    border-radius:50%;
+    border:2px solid rgba(16,185,129,0);
+    opacity:0;
+    pointer-events:none;
+    z-index:-1;
+  }
+  .orbit-icon.orbit-1::before{animation:halo-receive 2.5s ease-out infinite 2s}
+  .orbit-icon.orbit-2::before{animation:halo-receive 2.5s ease-out infinite 2.3s}
+  .orbit-icon.orbit-3::before{animation:halo-receive 2.5s ease-out infinite 2.6s}
+  .orbit-icon.orbit-4::before{animation:halo-receive 2.5s ease-out infinite 2.9s}
+  .orbit-icon.orbit-5::before{animation:halo-receive 2.5s ease-out infinite 3.2s}
+  .orbit-icon.orbit-6::before,
+  .orbit-icon.orbit-7::before{animation:halo-launch 2.5s ease-out infinite}
+  @keyframes halo-receive{
+    0%,75%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
+    80%{opacity:1;scale:1;border-color:rgba(16,185,129,.9);border-width:2px}
+    100%{opacity:0;scale:1.85;border-color:rgba(16,185,129,0);border-width:1px}
+  }
+  @keyframes halo-launch{
+    0%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
+    4%{opacity:1;scale:1;border-color:rgba(16,185,129,.9);border-width:2px}
+    28%{opacity:0;scale:1.85;border-color:rgba(16,185,129,0);border-width:1px}
+    100%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
+  }
   .orbit-icon[title]::after{
     content:attr(title);
     position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);
@@ -389,6 +442,8 @@
     .upload-lines .pulse{animation:none}
     .broadcast-dot{animation:none}
     .orbit-icon{animation:none}
+    .orbit-icon > svg{animation:none}
+    .orbit-icon::before{animation:none;opacity:0}
     .orbit-icon[title]::after{animation:none}
     .eyebrow .pulse{animation:none}
   }
@@ -689,7 +744,7 @@
 </head>
 <body>
 
-<div class="version-band">v065<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v066<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
