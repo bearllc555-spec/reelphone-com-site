@@ -629,65 +629,19 @@
     .hero h1{font-size:clamp(34px,9vw,46px)}
     .steps{grid-template-columns:1fr}
 
-    /* Framed hero card - deterministic grid layout, no absolute positioning */
+    /* Mobile hero: same architecture as desktop, scaled down. No frame. */
     .hero-visual{
-      display:grid;
-      grid-template-columns:repeat(5,1fr);
-      grid-template-rows:auto 1fr auto;
-      grid-template-areas:
-        "fb ig tt yt x"
-        "phone phone phone phone phone"
-        ".  tg . wa .";
-      column-gap:6px;
-      row-gap:20px;
       width:340px;
       max-width:100%;
-      height:auto;
       margin:0 auto;
-      padding:26px 18px;
-      border:1px solid rgba(10,16,35,.10);
-      border-radius:24px;
-      background:rgba(255,255,255,.55);
-      backdrop-filter:saturate(160%) blur(10px);
-      -webkit-backdrop-filter:saturate(160%) blur(10px);
-      aspect-ratio:auto;
+      aspect-ratio:1/1.05;
       min-height:auto;
-      box-shadow:0 1px 2px rgba(10,16,35,.04),0 18px 44px rgba(15,23,42,.08);
-      overflow:hidden;
+      overflow:visible;
     }
-    .hero-visual::before,.hero-visual::after{display:none}
-    .upload-lines{display:none}
-    .upload-orbit{display:contents}
-
-    .orbit-icon{
-      position:static;
-      width:44px;height:44px;
-      transform:none;
-      animation:none;
-      justify-self:center;
-      align-self:center;
-      filter:drop-shadow(0 8px 16px rgba(15,23,42,.14));
-    }
-    .orbit-icon::after{display:none}
-    .orbit-icon.orbit-1{grid-area:fb;top:auto;left:auto}
-    .orbit-icon.orbit-2{grid-area:ig;top:auto;left:auto}
-    .orbit-icon.orbit-3{grid-area:tt;top:auto;left:auto}
-    .orbit-icon.orbit-4{grid-area:yt;top:auto;left:auto}
-    .orbit-icon.orbit-5{grid-area:x;top:auto;left:auto}
-    .orbit-icon.orbit-6{grid-area:tg;top:auto;left:auto}
-    .orbit-icon.orbit-7{grid-area:wa;top:auto;left:auto}
-
-    .phone-card{
-      position:static;
-      grid-area:phone;
-      width:128px;
-      height:252px;
-      top:auto;left:auto;right:auto;bottom:auto;
-      margin:0 auto;
-      justify-self:center;
-      align-self:center;
-      aspect-ratio:auto;
-    }
+    /* Smaller icons so they don't crowd a 340px box */
+    .orbit-icon{width:42px;height:42px}
+    /* Hide auto-cycling labels on mobile - they overlap the phone */
+    .orbit-icon[title]::after{display:none}
 
     .cta-row{flex-direction:column;align-items:stretch}
     .cta-row .btn-primary,.cta-row .btn-secondary,.cta-row .btn-light,.cta-row .btn-ghost-light{
@@ -699,7 +653,7 @@
 </head>
 <body>
 
-<div class="version-band">v054<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v055<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -715,7 +669,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v54</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v55</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
