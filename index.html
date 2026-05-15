@@ -222,18 +222,21 @@
   }
   .phone-card{
     position:absolute;z-index:2;
-    top:30%;bottom:20%;left:50%;
-    transform:translateX(-50%);
+    top:30%;bottom:20%;left:0;right:0;
+    margin:0 auto;
+    width:fit-content;
     animation:float-phone 9s ease-in-out infinite;
     filter:drop-shadow(0 28px 32px rgba(15,23,42,.22));
+    will-change:transform;
   }
   .phone-card img{
     height:100%;width:auto;display:block;
+    aspect-ratio:539/1063;
     filter:url(#remove-phone-bg) contrast(1.06);
   }
   @keyframes float-phone{
-    0%,100%{transform:translateX(-50%) translateY(0)}
-    50%{transform:translateX(-50%) translateY(-3px)}
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-3px)}
   }
 
   /* Upload orbit (social platforms) */
@@ -644,7 +647,7 @@
 </head>
 <body>
 
-<div class="version-band">v048<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v049<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -660,7 +663,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v48</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v49</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -764,7 +767,7 @@
         </div>
 
         <div class="phone-card">
-          <img src="/images/phones/phone-01.jpg" alt="ReelPhone device broadcasting UGC videos to social platforms" loading="eager">
+          <img src="/images/phones/phone-01.jpg" width="539" height="1063" alt="ReelPhone device broadcasting UGC videos to social platforms" loading="eager" decoding="sync" fetchpriority="high">
         </div>
       </div>
     </div>
