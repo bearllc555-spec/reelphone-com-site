@@ -94,10 +94,11 @@
     font-size:21px;font-weight:800;letter-spacing:-.035em;
     color:var(--ink);text-decoration:none;
   }
-  .brand-mark .slash{
+  .brand-mark .slash,
+  .footer-inner .brand .slash{
     color:var(--blue);
-    font-weight:800;
-    letter-spacing:-.06em;
+    font-weight:inherit;
+    margin-right:-.05em;
   }
   .brand-mark .ver{
     font-size:11px;font-weight:500;color:var(--slate);
@@ -641,7 +642,7 @@
 </head>
 <body>
 
-<div class="version-band">v043<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v044<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -657,7 +658,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v43</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v44</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -916,7 +917,7 @@
 
 <footer>
   <div class="container footer-inner">
-    <span class="brand">reelphone</span>
+    <span class="brand"><span class="slash">/</span>reelphone</span>
     <span>reelphone.com &copy; 2026 &middot; a bear llc digital property</span>
   </div>
 </footer>
