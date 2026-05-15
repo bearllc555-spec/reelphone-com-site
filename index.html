@@ -3,37 +3,40 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>reelphone // a dedicated device and service for UGC-style content</title>
+<title>ReelPhone - a dedicated device and service for UGC-style content</title>
 <meta name="description" content="ReelPhone turns product photos into UGC-style short-form videos and posts them to your social accounts. A dedicated device and service for DTC brands and UGC agencies.">
-<meta property="og:title" content="reelphone // a dedicated device and service for UGC-style content">
+<meta property="og:title" content="ReelPhone - a dedicated device and service for UGC-style content">
 <meta property="og:description" content="Send a product photo. We turn it into posted UGC videos.">
 <meta property="og:url" content="https://reelphone.com/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="reelphone // a dedicated device and service for UGC-style content">
+<meta name="twitter:title" content="ReelPhone - a dedicated device and service for UGC-style content">
 <meta name="twitter:description" content="Send a product photo. We turn it into posted UGC videos.">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon.png">
-<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+<link rel="apple-touch-icon" href="/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#07080C;
-    --bg-soft:#0D1018;
-    --panel:rgba(255,255,255,.025);
-    --ink:#FFFFFF;
-    --ink-soft:#C3C6CE;
-    --slate:#7B808C;
-    --slate-dim:#525762;
-    --rule:rgba(255,255,255,.08);
-    --rule-strong:rgba(255,255,255,.18);
+    --bg:#F4F6FB;
+    --bg-soft:#EDF1F8;
+    --canvas:#FFFFFF;
+    --ink:#0A1023;
+    --ink-soft:#384055;
+    --slate:#5B6479;
+    --slate-dim:#8B93A6;
+    --rule:rgba(10,16,35,.07);
+    --rule-strong:rgba(10,16,35,.14);
     --blue:#2563EB;
     --blue-bright:#3B82F6;
-    --blue-glow:#60A5FA;
     --blue-deep:#1D4ED8;
-    --blue-soft:rgba(37,99,235,.10);
+    --blue-soft:#E8EFFE;
+    --blue-tint:rgba(37,99,235,.08);
+    --navy:#0E1830;
+    --navy-deep:#080F23;
+    --navy-soft:#1A2747;
   }
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -42,539 +45,690 @@
     background:var(--bg);
     color:var(--ink);
     -webkit-font-smoothing:antialiased;
-    line-height:1.5;
-    font-feature-settings:"ss01","cv11";letter-spacing:-.005em;
+    line-height:1.55;
+    font-feature-settings:"ss01","cv11";letter-spacing:-.011em;
     overflow-x:hidden;
-    min-height:100vh;
     position:relative;
   }
-  /* Ambient background: radial blue glow + faint grid */
+  /* Ambient cloud blobs */
   body::before{
     content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
     background:
-      radial-gradient(900px 600px at 78% 22%, rgba(37,99,235,.22), transparent 60%),
-      radial-gradient(700px 500px at 8% 88%, rgba(37,99,235,.10), transparent 65%),
-      linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+      radial-gradient(680px 520px at 88% 12%, rgba(99,102,241,.18), transparent 70%),
+      radial-gradient(560px 460px at 6% 36%, rgba(59,130,246,.14), transparent 72%),
+      radial-gradient(720px 580px at 78% 78%, rgba(165,180,252,.16), transparent 72%);
   }
-  body::after{
-    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-    background-size:72px 72px;
-    mask-image:radial-gradient(ellipse at 50% 35%, black 25%, transparent 78%);
-  }
-  main, nav, footer{position:relative;z-index:1}
-  /* Reusable */
-  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
-  .container{max-width:1280px;margin:0 auto;padding-left:32px;padding-right:32px}
-  .section-label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;font-weight:600;
-    color:var(--blue-glow);
-    letter-spacing:.18em;text-transform:uppercase;
-    margin-bottom:18px;
-    display:inline-flex;align-items:center;gap:.5rem;
-  }
-  .section-title{
-    font-family:'Inter';font-weight:900;
-    font-size:clamp(34px,4.4vw,56px);
-    line-height:1.02;letter-spacing:-.035em;
-    text-transform:uppercase;
-    margin-bottom:56px;
-    max-width:22ch;
-  }
-  .section-title em{font-style:normal;color:var(--blue-glow);text-shadow:0 0 28px rgba(96,165,250,.32)}
+  main, header, footer{position:relative;z-index:1}
 
-  /* NAV */
-  nav.top{
+  /* ----- Layout ----- */
+  .container{max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ----- Header ----- */
+  header.top{
     position:sticky;top:0;z-index:50;
-    backdrop-filter:saturate(140%) blur(14px);
-    -webkit-backdrop-filter:saturate(140%) blur(14px);
-    background:rgba(7,8,12,.62);
+    backdrop-filter:saturate(160%) blur(14px);
+    -webkit-backdrop-filter:saturate(160%) blur(14px);
+    background:rgba(244,246,251,.72);
     border-bottom:1px solid var(--rule);
   }
-  .nav-inner{
-    max-width:1280px;margin:0 auto;padding:16px 32px;
-    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 0;gap:24px;
   }
   .brand-mark{
-    font-family:'JetBrains Mono',monospace;
-    font-size:12.5px;font-weight:600;
-    color:var(--ink);text-transform:uppercase;letter-spacing:.04em;
-    text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;
+    display:inline-flex;align-items:baseline;gap:8px;
+    font-size:21px;font-weight:800;letter-spacing:-.035em;
+    color:var(--ink);text-decoration:none;
   }
-  .brand-mark .sep{color:var(--blue-glow)}
+  .brand-mark .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--blue);box-shadow:0 0 0 4px rgba(37,99,235,.16);
+    margin-right:2px;
+  }
   .brand-mark .ver{
-    color:var(--slate);font-size:10px;font-weight:500;
-    margin-left:6px;padding:2px 6px;border:1px solid var(--rule);border-radius:4px;
+    font-size:11px;font-weight:500;color:var(--slate);
+    padding:2px 8px;border:1px solid var(--rule);border-radius:999px;
+    background:rgba(255,255,255,.7);letter-spacing:0;
   }
-  .nav-links{display:flex;gap:28px}
+  .nav-links{display:flex;gap:32px}
   .nav-links a{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11.5px;font-weight:500;
-    color:var(--ink-soft);text-decoration:none;
-    text-transform:uppercase;letter-spacing:.08em;
-    transition:color .15s ease;
+    font-size:14px;font-weight:500;color:var(--ink-soft);
+    text-decoration:none;transition:color .15s ease;
   }
-  .nav-links a:hover{color:var(--blue-glow)}
-  .nav-cta{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;font-weight:700;
-    padding:9px 14px;border:1px solid var(--blue);
-    border-radius:6px;color:var(--blue-glow);
-    text-decoration:none;letter-spacing:.1em;text-transform:uppercase;
-    background:linear-gradient(180deg, rgba(37,99,235,.12), rgba(37,99,235,.02));
-    box-shadow:0 0 18px rgba(37,99,235,.22), inset 0 1px 0 rgba(255,255,255,.05);
-    transition:all .15s ease;
+  .nav-links a:hover{color:var(--ink)}
+  .btn-nav{
+    font-size:13.5px;font-weight:600;color:#fff;
+    background:var(--ink);padding:10px 18px;border-radius:999px;
+    text-decoration:none;transition:background .15s ease,transform .15s ease;
+    border:1px solid var(--ink);
     white-space:nowrap;
   }
-  .nav-cta:hover{background:var(--blue);color:#fff;box-shadow:0 0 28px rgba(37,99,235,.4)}
+  .btn-nav:hover{background:#1A2236;transform:translateY(-1px)}
 
-  /* HERO */
-  .hero{
-    padding:88px 32px 96px;
-    max-width:1280px;margin:0 auto;
-    display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center;
+  /* ----- Eyebrow ----- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.55rem;
+    font-size:13px;font-weight:600;color:var(--blue-deep);
+    background:#fff;
+    padding:7px 14px 7px 11px;border-radius:999px;
+    border:1px solid var(--rule);
+    box-shadow:0 1px 2px rgba(10,16,35,.04);
+    margin-bottom:24px;
   }
-  .hero-eyebrow{
-    font-family:'JetBrains Mono',monospace;
-    display:inline-flex;align-items:center;gap:.6rem;
-    font-size:11px;font-weight:600;
-    color:var(--blue-glow);letter-spacing:.2em;text-transform:uppercase;
-    margin-bottom:28px;
-    padding:7px 12px;
-    border:1px solid var(--rule-strong);border-radius:6px;
-    background:rgba(37,99,235,.06);
-  }
-  .hero-eyebrow .dot{
-    width:7px;height:7px;border-radius:50%;background:var(--blue-glow);
-    box-shadow:0 0 14px var(--blue-glow);
+  .eyebrow .pulse{
+    width:7px;height:7px;border-radius:50%;background:var(--blue);
+    box-shadow:0 0 0 4px rgba(37,99,235,.18);
     animation:pulse 2.4s ease-in-out infinite;
   }
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.25)}}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.18)}}
+
+  /* ----- Hero ----- */
+  .hero{padding:72px 0 96px}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;
+  }
   .hero h1{
-    font-family:'Inter';font-weight:900;
-    font-size:clamp(44px,6.6vw,86px);
-    line-height:.94;letter-spacing:-.04em;
-    text-transform:uppercase;
-    margin-bottom:28px;
+    font-size:clamp(40px,5.6vw,68px);
+    font-weight:700;letter-spacing:-.035em;
+    line-height:1.04;
+    margin-bottom:22px;
+    text-wrap:balance;
   }
   .hero h1 .accent{
-    color:var(--blue-glow);
-    text-shadow:0 0 32px rgba(96,165,250,.45), 0 0 8px rgba(96,165,250,.3);
-    display:inline-block;
+    color:var(--blue);
+    background:linear-gradient(110deg, var(--blue) 0%, var(--blue-bright) 60%, #6B8AFF 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   }
   .hero p.lead{
-    font-size:17px;line-height:1.6;color:var(--ink-soft);
-    max-width:52ch;margin-bottom:36px;
+    font-size:17.5px;color:var(--ink-soft);line-height:1.6;
+    max-width:54ch;margin-bottom:32px;
   }
-  .cta-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  .btn{
-    display:inline-flex;align-items:center;gap:.6rem;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;font-weight:700;
-    padding:14px 22px;border-radius:6px;
-    text-decoration:none;text-transform:uppercase;letter-spacing:.12em;
-    border:1px solid;transition:all .18s ease;
-    white-space:nowrap;
+  .cta-row{
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;
+    margin-bottom:28px;
   }
-  .btn .arrow{transition:transform .18s ease}
-  .btn:hover .arrow{transform:translateX(3px)}
   .btn-primary{
-    border-color:var(--blue);color:#fff;
-    background:linear-gradient(180deg, var(--blue-bright) 0%, var(--blue-deep) 100%);
-    box-shadow:0 0 32px rgba(37,99,235,.45), inset 0 1px 0 rgba(255,255,255,.18);
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:var(--blue);color:#fff;
+    font-size:14.5px;font-weight:600;letter-spacing:-.005em;
+    padding:13px 22px;border-radius:10px;
+    border:1px solid var(--blue);
+    box-shadow:0 1px 2px rgba(10,16,35,.06),0 8px 22px rgba(37,99,235,.22);
+    text-decoration:none;
+    transition:background .15s ease,box-shadow .15s ease,transform .15s ease;
   }
   .btn-primary:hover{
-    box-shadow:0 0 44px rgba(37,99,235,.6), inset 0 1px 0 rgba(255,255,255,.24);
+    background:var(--blue-deep);border-color:var(--blue-deep);
+    box-shadow:0 1px 2px rgba(10,16,35,.06),0 12px 30px rgba(37,99,235,.34);
     transform:translateY(-1px);
   }
-  .btn-ghost{
-    border-color:var(--rule-strong);color:var(--ink);background:transparent;
-  }
-  .btn-ghost:hover{border-color:var(--blue-glow);color:var(--blue-glow);background:rgba(37,99,235,.06)}
-
-  /* HERO VISUAL */
-  .hero-visual{
-    position:relative;
-    aspect-ratio:1/1.08;
+  .btn-primary .arrow{transition:transform .15s ease}
+  .btn-primary:hover .arrow{transform:translateX(3px)}
+  .btn-secondary{
+    display:inline-flex;align-items:center;gap:.4rem;
+    background:#fff;color:var(--ink);
+    font-size:14.5px;font-weight:600;
+    padding:13px 20px;border-radius:10px;
     border:1px solid var(--rule-strong);
-    border-radius:14px;
-    overflow:hidden;
-    background:
-      radial-gradient(circle at 50% 42%, rgba(37,99,235,.32), transparent 62%),
-      linear-gradient(180deg, rgba(255,255,255,.02), transparent);
-    display:grid;place-items:center;
-    box-shadow:0 0 60px rgba(37,99,235,.18), inset 0 0 0 1px rgba(255,255,255,.03);
+    text-decoration:none;
+    box-shadow:0 1px 2px rgba(10,16,35,.04);
+    transition:border-color .15s ease,transform .15s ease;
   }
-  /* grid backdrop */
+  .btn-secondary:hover{border-color:var(--ink);transform:translateY(-1px)}
+  .hero-meta{
+    display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+    font-size:13.5px;color:var(--slate);
+  }
+  .hero-meta span{display:inline-flex;align-items:center;gap:.5rem}
+  .hero-meta span::before{
+    content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);
+  }
+
+  /* ----- Hero visual: phone ----- */
+  .hero-visual{
+    position:relative;display:flex;justify-content:center;align-items:center;
+    aspect-ratio:1/1;
+  }
   .hero-visual::before{
-    content:"";position:absolute;inset:0;
-    background-image:
-      linear-gradient(rgba(96,165,250,.10) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(96,165,250,.10) 1px, transparent 1px);
-    background-size:36px 36px;
-    mask-image:radial-gradient(circle at 50% 50%, black 28%, transparent 72%);
+    /* spotlight glow behind phone */
+    content:"";position:absolute;inset:6% 8%;
+    background:radial-gradient(circle at 50% 45%, rgba(99,102,241,.22), transparent 65%);
+    filter:blur(8px);
+    z-index:0;
   }
-  /* concentric rings */
-  .ring{
-    position:absolute;border:1px solid rgba(96,165,250,.14);border-radius:50%;
-    top:50%;left:50%;transform:translate(-50%,-50%);
+  .hero-visual::after{
+    /* soft platform under phone */
+    content:"";position:absolute;bottom:6%;left:18%;right:18%;height:18px;
+    background:radial-gradient(ellipse at 50% 0, rgba(10,16,35,.18), transparent 70%);
+    filter:blur(6px);z-index:0;
   }
-  .ring.r1{width:62%;height:62%;border-color:rgba(96,165,250,.22)}
-  .ring.r2{width:82%;height:82%;border-color:rgba(96,165,250,.12)}
-  .ring.r3{width:100%;height:100%;border-color:rgba(96,165,250,.06)}
-  .hero-visual img{
-    position:relative;width:58%;display:block;
-    filter:drop-shadow(0 0 54px rgba(37,99,235,.55)) drop-shadow(0 24px 60px rgba(0,0,0,.55));
-    animation:float 6s ease-in-out infinite;
+  .phone-card{
+    position:relative;z-index:1;
+    background:linear-gradient(180deg, #FFFFFF 0%, #F4F6FB 100%);
+    border:1px solid var(--rule);
+    border-radius:24px;
+    padding:14px;
+    box-shadow:
+      0 1px 2px rgba(10,16,35,.04),
+      0 24px 60px rgba(15,23,42,.10),
+      inset 0 1px 0 rgba(255,255,255,.6);
+    width:88%;max-width:460px;
+  }
+  .phone-card img{
+    width:100%;height:auto;display:block;
+    border-radius:14px;
+    animation:float 7s ease-in-out infinite;
   }
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
   @media (prefers-reduced-motion: reduce){
-    .hero-visual img{animation:none}
-    .hero-eyebrow .dot{animation:none}
+    .phone-card img{animation:none}
+    .eyebrow .pulse{animation:none}
   }
-  /* corner tickers */
-  .corner{
-    position:absolute;
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;font-weight:600;
-    color:var(--blue-glow);
-    letter-spacing:.18em;text-transform:uppercase;
-    padding:6px 10px;
-    background:rgba(7,8,12,.6);
-    border:1px solid var(--rule-strong);
-    border-radius:5px;
+  .phone-floater{
+    position:absolute;z-index:2;
+    background:#fff;border:1px solid var(--rule);border-radius:14px;
+    padding:12px 14px;
+    box-shadow:0 10px 24px rgba(15,23,42,.08);
+    font-size:12.5px;color:var(--ink);font-weight:500;line-height:1.4;
+    display:flex;align-items:center;gap:10px;
   }
-  .corner.tl{top:14px;left:14px}
-  .corner.tr{top:14px;right:14px;color:var(--ink-soft)}
-  .corner.bl{bottom:14px;left:14px;color:var(--ink-soft)}
-  .corner.br{bottom:14px;right:14px}
+  .phone-floater .swatch{
+    width:30px;height:30px;border-radius:8px;flex-shrink:0;
+    display:grid;place-items:center;font-weight:700;font-size:13px;color:#fff;
+  }
+  .phone-floater.top-left{top:8%;left:-12px;}
+  .phone-floater.top-left .swatch{background:linear-gradient(135deg,#4F46E5,#3B82F6)}
+  .phone-floater.bottom-right{bottom:14%;right:-8px;}
+  .phone-floater.bottom-right .swatch{background:linear-gradient(135deg,#10B981,#34D399)}
+  .phone-floater .label{font-size:11px;color:var(--slate);font-weight:500;letter-spacing:.02em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .phone-floater .value{font-size:13.5px;color:var(--ink);font-weight:600}
 
-  /* STATS STRIP */
-  .stats{
-    max-width:1280px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(3,1fr);
-    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  /* ----- Section base ----- */
+  section{padding:96px 0}
+  .section-eyebrow{
+    display:inline-block;
+    font-size:13px;font-weight:600;color:var(--blue-deep);
+    padding:6px 12px;border-radius:999px;background:var(--blue-soft);
+    margin-bottom:18px;
   }
-  .stat{
-    padding:30px 32px;
-    border-right:1px solid var(--rule);
+  .section-title{
+    font-size:clamp(30px,3.8vw,46px);font-weight:700;
+    letter-spacing:-.03em;line-height:1.08;
+    margin-bottom:18px;max-width:22ch;text-wrap:balance;
+  }
+  .section-title em{font-style:normal;color:var(--blue);}
+  .section-sub{
+    font-size:17px;color:var(--ink-soft);line-height:1.6;
+    max-width:62ch;margin-bottom:48px;
+  }
+
+  /* ----- Intro band ----- */
+  section.intro{padding-top:32px;padding-bottom:60px}
+  section.intro .section-title{font-size:clamp(26px,3vw,36px);max-width:30ch;margin-bottom:12px}
+  section.intro p{font-size:17px;color:var(--ink-soft);max-width:62ch;line-height:1.65}
+
+  /* ----- Dark workflow section ----- */
+  section.workflow{padding:48px 0}
+  .dark-card{
     position:relative;
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:28px;
+    padding:64px 56px;
+    color:#fff;
+    overflow:hidden;
   }
-  .stat:last-child{border-right:0}
-  .stat .label{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10.5px;font-weight:600;
-    color:var(--slate);letter-spacing:.18em;text-transform:uppercase;
-    margin-bottom:14px;
-    display:flex;align-items:center;gap:.5rem;
+  .dark-card::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(560px 360px at 88% 14%, rgba(99,102,241,.32), transparent 60%),
+      radial-gradient(420px 320px at 8% 86%, rgba(59,130,246,.18), transparent 65%);
   }
-  .stat .label::before{
-    content:"";width:5px;height:5px;background:var(--blue-glow);border-radius:50%;
-    box-shadow:0 0 8px var(--blue-glow);
+  .dark-card::after{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.4;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:40px 40px;
+    mask-image:radial-gradient(ellipse at 50% 50%, black 30%, transparent 75%);
   }
-  .stat .value{
-    font-family:'Inter';font-size:clamp(28px,3.2vw,38px);
-    font-weight:800;letter-spacing:-.025em;color:var(--ink);line-height:1;
+  .dark-card-grid{
+    position:relative;z-index:1;
+    display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;
   }
-  .stat .value .unit{
-    color:var(--blue-glow);font-size:.55em;font-weight:600;margin-left:4px;
+  .dark-card .section-eyebrow{background:rgba(99,102,241,.18);color:#A5B4FC}
+  .dark-card h2{
+    font-size:clamp(28px,3.4vw,42px);font-weight:700;letter-spacing:-.025em;
+    line-height:1.1;margin-bottom:18px;color:#F8FAFC;
   }
+  .dark-card h2 em{font-style:normal;color:#A5B4FC}
+  .dark-card p{
+    font-size:16.5px;color:#C3CBDD;line-height:1.65;max-width:48ch;
+  }
+  .flow{
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .flow-step{
+    display:flex;align-items:center;gap:14px;
+    padding:14px 16px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    backdrop-filter:blur(6px);
+  }
+  .flow-step .num{
+    width:32px;height:32px;border-radius:8px;
+    display:grid;place-items:center;
+    background:linear-gradient(135deg,#4F46E5,#3B82F6);
+    font-size:13px;font-weight:700;color:#fff;
+    box-shadow:0 4px 12px rgba(59,130,246,.4);
+    flex-shrink:0;
+  }
+  .flow-step .label{font-size:11px;color:#94A3B8;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px;display:block}
+  .flow-step .text{font-size:14.5px;color:#F8FAFC;font-weight:500}
 
-  /* PROCESS */
-  section.process{padding:120px 32px 80px;max-width:1280px;margin:0 auto}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-  .step{
-    padding:28px 24px 24px;
-    background:var(--panel);
-    border:1px solid var(--rule);
-    border-radius:10px;
-    position:relative;
-    transition:border-color .2s ease, transform .2s ease;
+  /* ----- 4-step process (light) ----- */
+  section.process{padding:80px 0}
+  .steps{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    margin-top:8px;
   }
-  .step:hover{border-color:var(--rule-strong);transform:translateY(-2px)}
-  .step .num{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;font-weight:700;
-    color:var(--blue-glow);letter-spacing:.16em;
-    margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;
+  .step-card{
+    background:#fff;border:1px solid var(--rule);border-radius:18px;
+    padding:26px 24px;
+    box-shadow:0 1px 2px rgba(10,16,35,.03);
+    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
   }
-  .step .num .tag{color:var(--slate)}
-  .step h3{
-    font-family:'Inter';font-size:18px;font-weight:700;letter-spacing:-.015em;
-    margin-bottom:8px;
+  .step-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 30px rgba(10,16,35,.07);
+    border-color:var(--rule-strong);
   }
-  .step p{font-size:14px;color:var(--ink-soft);line-height:1.55}
+  .step-card .num-pill{
+    display:inline-flex;align-items:center;gap:.4rem;
+    font-size:12px;font-weight:700;color:var(--blue-deep);
+    background:var(--blue-soft);padding:5px 10px;border-radius:999px;
+    letter-spacing:.06em;text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  .step-card h3{
+    font-size:18px;font-weight:700;letter-spacing:-.015em;
+    margin-bottom:8px;line-height:1.25;
+  }
+  .step-card p{font-size:14.5px;color:var(--ink-soft);line-height:1.55}
 
-  /* PRICING */
-  section.pricing{padding:80px 32px 80px;max-width:1280px;margin:0 auto}
-  .pricing-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px}
-  .price-card{
-    padding:32px;
-    background:var(--panel);
-    border:1px solid var(--rule);
-    border-radius:12px;
-    position:relative;
-  }
-  .price-card.feature{
-    border-color:rgba(37,99,235,.6);
-    background:linear-gradient(180deg, rgba(37,99,235,.14) 0%, rgba(37,99,235,.04) 60%, transparent 100%);
-    box-shadow:0 0 64px rgba(37,99,235,.18), inset 0 1px 0 rgba(255,255,255,.05);
-  }
-  .price-card .price-tag{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10.5px;font-weight:600;
-    color:var(--blue-glow);letter-spacing:.18em;text-transform:uppercase;
-    margin-bottom:20px;display:flex;align-items:center;gap:.5rem;
-  }
-  .price-card .price-tag .pin{
-    padding:3px 7px;border:1px solid var(--blue);border-radius:4px;
-    font-size:9px;background:rgba(37,99,235,.12);
-  }
-  .price-card .price-value{
-    font-family:'Inter';font-size:42px;font-weight:800;letter-spacing:-.03em;
-    line-height:1;margin-bottom:8px;
-  }
-  .price-card .price-unit{
-    color:var(--slate);font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;
-  }
-  .price-card p{
-    margin-top:18px;color:var(--ink-soft);font-size:14.5px;line-height:1.6;
-  }
-
-  /* BUILT FOR */
-  section.built{padding:60px 32px 80px;max-width:1280px;margin:0 auto}
-  .built-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  /* ----- Built for ----- */
+  section.built{padding:64px 0 96px}
+  .built-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
   .built-card{
-    padding:32px;
-    background:var(--panel);
-    border:1px solid var(--rule);
-    border-radius:12px;
+    background:#fff;border:1px solid var(--rule);border-radius:20px;
+    padding:36px 32px;
+    box-shadow:0 1px 2px rgba(10,16,35,.03);
+    position:relative;overflow:hidden;
+  }
+  .built-card::before{
+    content:"";position:absolute;top:-40px;right:-40px;width:200px;height:200px;
+    background:radial-gradient(circle, var(--blue-tint), transparent 70%);
+    pointer-events:none;
   }
   .built-card .who{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10.5px;font-weight:600;
-    color:var(--blue-glow);letter-spacing:.18em;text-transform:uppercase;
-    margin-bottom:14px;
-  }
-  .built-card h3{
-    font-family:'Inter';font-size:22px;font-weight:700;letter-spacing:-.02em;
-    margin-bottom:12px;
-  }
-  .built-card p{color:var(--ink-soft);font-size:15px;line-height:1.6}
-
-  /* CTA BLOCK */
-  section.cta{
-    max-width:1280px;margin:0 auto;padding:100px 32px;text-align:center;
+    display:inline-flex;align-items:center;gap:.4rem;
+    font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--blue-deep);background:var(--blue-soft);
+    padding:5px 11px;border-radius:999px;margin-bottom:16px;
     position:relative;
   }
-  section.cta::before{
-    content:"";position:absolute;inset:0;z-index:-1;
-    background:radial-gradient(700px 360px at 50% 50%, rgba(37,99,235,.18), transparent 65%);
+  .built-card h3{
+    font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.25;
+    margin-bottom:12px;position:relative;
   }
-  section.cta h2{
-    font-family:'Inter';font-weight:900;
-    font-size:clamp(36px,5.4vw,72px);
-    line-height:.98;letter-spacing:-.04em;text-transform:uppercase;
-    margin-bottom:24px;max-width:18ch;margin-left:auto;margin-right:auto;
-  }
-  section.cta h2 em{font-style:normal;color:var(--blue-glow);text-shadow:0 0 32px rgba(96,165,250,.4)}
-  section.cta p.lead{
-    color:var(--ink-soft);font-size:17px;line-height:1.6;
-    max-width:56ch;margin:0 auto 36px;
-  }
-  section.cta .cta-row{justify-content:center}
+  .built-card p{font-size:15px;color:var(--ink-soft);line-height:1.6;position:relative}
 
-  /* FOOTER */
+  /* ----- Pricing ----- */
+  section.pricing{padding:80px 0}
+  .pricing-grid{
+    display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:18px;margin-top:8px;
+  }
+  .price-card{
+    background:#fff;border:1px solid var(--rule);border-radius:20px;
+    padding:32px 28px;
+    box-shadow:0 1px 2px rgba(10,16,35,.03);
+    display:flex;flex-direction:column;
+  }
+  .price-card.feature{
+    background:linear-gradient(180deg, var(--canvas) 0%, var(--blue-soft) 100%);
+    border:1px solid rgba(37,99,235,.32);
+    box-shadow:0 12px 40px rgba(37,99,235,.14);
+    position:relative;
+  }
+  .price-card.feature::before{
+    content:"Start here";
+    position:absolute;top:-12px;left:28px;
+    background:var(--blue);color:#fff;
+    font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 10px;border-radius:999px;
+    box-shadow:0 6px 16px rgba(37,99,235,.32);
+  }
+  .price-card .price-tag{
+    font-size:13.5px;font-weight:600;color:var(--slate);
+    text-transform:uppercase;letter-spacing:.06em;
+    margin-bottom:16px;
+  }
+  .price-card .price-value{
+    font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1;
+    margin-bottom:6px;
+  }
+  .price-card .price-unit{
+    color:var(--slate);font-size:14.5px;font-weight:500;letter-spacing:0;
+  }
+  .price-card p{
+    margin-top:16px;color:var(--ink-soft);font-size:14.5px;line-height:1.6;
+  }
+
+  /* ----- CTA banner ----- */
+  section.cta{padding:48px 0 96px}
+  .cta-banner{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(800px 400px at 12% 100%, rgba(255,255,255,.16), transparent 60%),
+      radial-gradient(700px 380px at 100% 0%, rgba(165,180,252,.32), transparent 60%),
+      linear-gradient(135deg, var(--blue-deep) 0%, var(--blue) 60%, #4F46E5 100%);
+    border-radius:28px;
+    padding:80px 64px;
+    color:#fff;text-align:center;
+    box-shadow:0 32px 80px rgba(37,99,235,.32);
+  }
+  .cta-banner::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;
+    background-image:
+      linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.5) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse at 50% 50%, black 25%, transparent 75%);
+  }
+  .cta-banner > *{position:relative;z-index:1}
+  .cta-banner h2{
+    font-size:clamp(32px,4.4vw,52px);font-weight:700;letter-spacing:-.03em;
+    line-height:1.06;margin-bottom:18px;max-width:24ch;
+    margin-left:auto;margin-right:auto;
+  }
+  .cta-banner h2 em{font-style:normal;color:#C7D2FE}
+  .cta-banner p{
+    font-size:17px;color:rgba(255,255,255,.86);line-height:1.6;
+    max-width:54ch;margin:0 auto 32px;
+  }
+  .cta-banner .cta-row{justify-content:center;margin-bottom:0}
+  .btn-light{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:#fff;color:var(--blue-deep);
+    font-size:14.5px;font-weight:700;letter-spacing:-.005em;
+    padding:13px 22px;border-radius:10px;
+    border:1px solid #fff;
+    text-decoration:none;
+    box-shadow:0 12px 30px rgba(8,15,35,.24);
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .btn-light:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(8,15,35,.32)}
+  .btn-ghost-light{
+    display:inline-flex;align-items:center;gap:.4rem;
+    color:#fff;font-size:14.5px;font-weight:600;
+    padding:13px 20px;border-radius:10px;
+    border:1px solid rgba(255,255,255,.32);
+    text-decoration:none;
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .btn-ghost-light:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+  /* ----- Footer ----- */
   footer{
     border-top:1px solid var(--rule);
-    padding:28px 32px;
+    padding:32px 0 40px;
   }
   .footer-inner{
-    max-width:1280px;margin:0 auto;
-    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;color:var(--slate);
-    text-transform:uppercase;letter-spacing:.14em;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;
+    font-size:13.5px;color:var(--slate);
   }
-  .footer-inner .sep{color:var(--blue-glow);margin:0 .4em}
+  .footer-inner .brand{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
 
-  /* RESPONSIVE */
-  @media (max-width:1024px){
-    .hero{grid-template-columns:1.1fr 1fr;gap:40px;padding:64px 32px 72px}
+  /* ----- Responsive ----- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:48px}
+    .hero{padding:48px 0 64px}
+    .hero-visual{order:-1;max-width:480px;margin:0 auto;width:100%}
+    .dark-card-grid{grid-template-columns:1fr;gap:32px}
+    .dark-card{padding:48px 32px}
     .steps{grid-template-columns:repeat(2,1fr)}
     .pricing-grid{grid-template-columns:1fr}
     .pricing-grid .price-card.feature{order:-1}
-  }
-  @media (max-width:760px){
-    .container, .nav-inner, .hero, .stats, section.process, section.pricing, section.built, section.cta{padding-left:20px;padding-right:20px}
-    .nav-inner{padding:14px 20px}
-    .nav-links{display:none}
-    .hero{grid-template-columns:1fr;padding:48px 20px 64px;gap:36px}
-    .hero h1{font-size:clamp(40px,11vw,64px)}
-    .hero-visual{max-width:420px;margin:0 auto;width:100%}
-    .stats{grid-template-columns:1fr}
-    .stat{border-right:0;border-bottom:1px solid var(--rule)}
-    .stat:last-child{border-bottom:0}
     .built-grid{grid-template-columns:1fr}
-    section.process{padding:72px 20px 48px}
-    section.pricing{padding:48px 20px}
-    section.built{padding:32px 20px 60px}
-    section.cta{padding:72px 20px}
-    .btn{width:100%;max-width:320px;justify-content:center}
-    .cta-row{flex-direction:column;align-items:stretch}
-    section.cta .cta-row{align-items:center}
+    .nav-links{display:none}
+    section{padding:64px 0}
+    section.pricing{padding:48px 0}
+    .cta-banner{padding:56px 32px;border-radius:20px}
   }
-  @media (max-width:480px){
+  @media (max-width:600px){
+    .container{padding:0 20px}
+    .nav{padding:14px 0}
+    .hero h1{font-size:clamp(34px,9vw,46px)}
     .steps{grid-template-columns:1fr}
-    .corner{font-size:9px;padding:5px 8px}
+    .phone-card{padding:10px;border-radius:20px}
+    .phone-floater.top-left{left:-4px}
+    .phone-floater.bottom-right{right:-4px}
+    .cta-row{flex-direction:column;align-items:stretch}
+    .cta-row .btn-primary,.cta-row .btn-secondary,.cta-row .btn-light,.cta-row .btn-ghost-light{
+      justify-content:center;
+    }
+    .cta-banner{padding:48px 24px}
   }
 </style>
 </head>
 <body>
 
-<nav class="top">
-  <div class="nav-inner">
-    <a class="brand-mark" href="/">REELPHONE <span class="sep">//</span> SYSTEM <span class="ver">v16</span></a>
-    <div class="nav-links">
-      <a href="#process">PROCESS</a>
-      <a href="#pricing">PRICING</a>
-      <a href="#built-for">WHO IT'S FOR</a>
-    </div>
-    <a class="nav-cta" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request">INIT_DEMO &rarr;</a>
+<header class="top">
+  <div class="container nav">
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v17</span></a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#built-for">Who it's for</a>
+    </nav>
+    <a class="btn-nav" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request">Book a demo</a>
   </div>
-</nav>
+</header>
 
 <main>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-copy">
-      <span class="hero-eyebrow"><span class="dot"></span>SYS:ACTIVE &nbsp;//&nbsp; NOW BOOKING DEMOS</span>
-      <h1>SEND A PRODUCT PHOTO.<br>WE TURN IT INTO<br><span class="accent">POSTED UGC VIDEOS.</span></h1>
-      <p class="lead">A dedicated device and service that turns your product photos into UGC-style short-form videos, posts them to your connected social accounts, and reports back with links and status. Built for DTC brands and UGC agencies.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request&body=Company%3A%20%0AWebsite%3A%20%0AWhat%20you%27re%20trying%20to%20get%20done%3A%20%0ABest%20time%20to%20chat%3A%20">Book a demo <span class="arrow">&rarr;</span></a>
-        <a class="btn btn-ghost" href="#process">View the process <span class="arrow">&rarr;</span></a>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="pulse"></span>Now booking demos &middot; DTC + UGC agencies</span>
+        <h1>Send a product photo. <span class="accent">We turn it into posted UGC videos.</span></h1>
+        <p class="lead">A dedicated device and service that generates UGC-style short-form videos from your product photos, posts them to your connected social accounts, and reports back with links and status.</p>
+        <div class="cta-row">
+          <a class="btn-primary" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request&body=Company%3A%20%0AWebsite%3A%20%0AWhat%20you%27re%20trying%20to%20get%20done%3A%20%0ABest%20time%20to%20chat%3A%20">Book a demo <span class="arrow">&rarr;</span></a>
+          <a class="btn-secondary" href="#how">See how it works</a>
+        </div>
+        <div class="hero-meta">
+          <span>Up to 90 videos / mo per phone</span>
+          <span>Dedicated device + service</span>
+          <span>Built for DTC + agencies</span>
+        </div>
       </div>
-    </div>
-
-    <div class="hero-visual" aria-hidden="true">
-      <span class="corner tl">UNIT.01</span>
-      <span class="corner tr">DEVICE / SERVICE</span>
-      <span class="corner bl">UGC // 30s</span>
-      <span class="corner br">STATUS: READY</span>
-      <span class="ring r3"></span>
-      <span class="ring r2"></span>
-      <span class="ring r1"></span>
-      <img src="/reel-phone-logo-01.png" alt="ReelPhone device" width="240" height="240" />
-    </div>
-  </section>
-
-  <!-- STATS STRIP -->
-  <section class="stats">
-    <div class="stat">
-      <div class="label">VIDEOS / PHONE</div>
-      <div class="value">Up to 90<span class="unit">/ month</span></div>
-    </div>
-    <div class="stat">
-      <div class="label">FIRST_PHONE / SETUP</div>
-      <div class="value">$1,997<span class="unit">one-time</span></div>
-    </div>
-    <div class="stat">
-      <div class="label">MONTHLY / PER PHONE</div>
-      <div class="value">$1,750 - $2,000<span class="unit">/ mo</span></div>
-    </div>
-  </section>
-
-  <!-- PROCESS -->
-  <section class="process" id="process">
-    <div class="section-label">// PROCESS &nbsp; 04_STEPS</div>
-    <h2 class="section-title">From product photo to <em>posted video</em>, end to end.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="num"><span>01</span><span class="tag">SEND</span></div>
-        <h3>Send a product photo</h3>
-        <p>Drop in product media and a short prompt: "make UGC for this hoodie." That's the input.</p>
-      </div>
-      <div class="step">
-        <div class="num"><span>02</span><span class="tag">CONCEPT</span></div>
-        <h3>Concepts + scripts</h3>
-        <p>ReelPhone generates UGC-style concepts and short-form scripts tuned to your brand.</p>
-      </div>
-      <div class="step">
-        <div class="num"><span>03</span><span class="tag">POST</span></div>
-        <h3>Posted to social</h3>
-        <p>Videos render, push to your dedicated device, and post to your connected accounts on a safe cadence.</p>
-      </div>
-      <div class="step">
-        <div class="num"><span>04</span><span class="tag">REPORT</span></div>
-        <h3>Status + links back</h3>
-        <p>You get post URLs, status, and monitoring. Content output becomes modular infrastructure.</p>
+      <div class="hero-visual">
+        <div class="phone-floater top-left">
+          <div class="swatch">UGC</div>
+          <div>
+            <span class="label">Today</span>
+            <span class="value">12 videos posted</span>
+          </div>
+        </div>
+        <div class="phone-card">
+          <img src="/images/phone-01.jpg" alt="ReelPhone device on a clean white surface" loading="eager">
+        </div>
+        <div class="phone-floater bottom-right">
+          <div class="swatch">OK</div>
+          <div>
+            <span class="label">Account health</span>
+            <span class="value">Safe cadence</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="pricing" id="pricing">
-    <div class="section-label">// CONFIGURATION &nbsp; HARDWARE_PLUS_SERVICE</div>
-    <h2 class="section-title">Buy the device. Subscribe to the <em>service.</em></h2>
-    <div class="pricing-grid">
-      <div class="price-card feature">
-        <div class="price-tag"><span class="pin">UNIT.01</span> FIRST_PHONE</div>
-        <div class="price-value">$1,997 <span class="price-unit">setup</span></div>
-        <p>Includes a four-slot rack with cooling, provisioning, and express shipping. Your first ReelPhone arrives configured and ready to start posting.</p>
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="container">
+      <span class="section-eyebrow">The problem</span>
+      <h2 class="section-title">Your team can&rsquo;t post fast enough.</h2>
+      <p>Short-form is the channel. DTC brands and agencies need more hooks, more variations, more daily output than a manual creative team can sustainably produce. ReelPhone is a real device that runs the loop for you &mdash; from product photo, to UGC concept, to posted video, to reporting back.</p>
+    </div>
+  </section>
+
+  <!-- DARK WORKFLOW CARD -->
+  <section class="workflow">
+    <div class="container">
+      <div class="dark-card">
+        <div class="dark-card-grid">
+          <div>
+            <span class="section-eyebrow">The workflow</span>
+            <h2>From product photo to <em>posted video</em>, end to end.</h2>
+            <p>Send a product photo and a short prompt. ReelPhone generates UGC-style concepts and scripts, renders short-form videos, pushes them to your dedicated device, posts them to your connected social accounts on a safe cadence, and reports back with status and links.</p>
+          </div>
+          <div class="flow">
+            <div class="flow-step">
+              <div class="num">01</div>
+              <div>
+                <span class="label">Send</span>
+                <span class="text">Product photo + short prompt in.</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">02</div>
+              <div>
+                <span class="label">Concept</span>
+                <span class="text">UGC concepts and short-form scripts.</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">03</div>
+              <div>
+                <span class="label">Post</span>
+                <span class="text">Videos render and post on a safe cadence.</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div class="num">04</div>
+              <div>
+                <span class="label">Report</span>
+                <span class="text">Status, links, and monitoring back to you.</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="price-card">
-        <div class="price-tag">ADDITIONAL_PHONES</div>
-        <div class="price-value">$1,700 <span class="price-unit">each</span></div>
-        <p>Scale capacity 90 videos at a time. Each additional phone is fully provisioned and slot-ready.</p>
-      </div>
-      <div class="price-card">
-        <div class="price-tag">MONTHLY_SERVICE</div>
-        <div class="price-value">$1,750 - $2,000 <span class="price-unit">/ mo per phone</span></div>
-        <p>Up to 90 UGC-style 30-second videos per month, safe posting workflows, account monitoring, and reporting.</p>
+    </div>
+  </section>
+
+  <!-- 4-STEP PROCESS -->
+  <section class="process" id="how">
+    <div class="container">
+      <span class="section-eyebrow">Four steps</span>
+      <h2 class="section-title">From scattered ideas to a posting loop.</h2>
+      <p class="section-sub">A consistent operating rhythm replaces ad-hoc production. Each step is repeatable, observable, and scalable.</p>
+      <div class="steps">
+        <div class="step-card">
+          <span class="num-pill">01 &middot; Send</span>
+          <h3>Send a product photo</h3>
+          <p>Drop in a product image and a short prompt: &ldquo;make UGC for this hoodie.&rdquo; That&rsquo;s the input.</p>
+        </div>
+        <div class="step-card">
+          <span class="num-pill">02 &middot; Concept</span>
+          <h3>Concepts + scripts</h3>
+          <p>ReelPhone generates UGC-style concepts and short-form scripts tuned to your brand voice.</p>
+        </div>
+        <div class="step-card">
+          <span class="num-pill">03 &middot; Post</span>
+          <h3>Posted to social</h3>
+          <p>Videos render, push to your dedicated device, and post to your connected accounts on a safe cadence.</p>
+        </div>
+        <div class="step-card">
+          <span class="num-pill">04 &middot; Report</span>
+          <h3>Status + links back</h3>
+          <p>Post URLs, status, and account monitoring delivered as reporting. Content output as infrastructure.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- BUILT FOR -->
   <section class="built" id="built-for">
-    <div class="section-label">// WHO IT'S FOR</div>
-    <h2 class="section-title">Built for teams that need <em>more content</em>, not more meetings.</h2>
-    <div class="built-grid">
-      <div class="built-card">
-        <div class="who">VERTICAL_01 / PRIMARY</div>
-        <h3>Shopify / DTC brands</h3>
-        <p>Already running short-form or paid social and need more creative volume than your current team can produce. Test more hooks, ship more variations, keep a consistent posting cadence without hiring another producer.</p>
-      </div>
-      <div class="built-card">
-        <div class="who">VERTICAL_02 / SECONDARY</div>
-        <h3>UGC and social media agencies</h3>
-        <p>Fulfill recurring short-form packages for multiple clients without adding manual production overhead. Treat ReelPhone as repeatable content infrastructure billed monthly.</p>
+    <div class="container">
+      <span class="section-eyebrow">Who it&rsquo;s for</span>
+      <h2 class="section-title">Built for teams that need <em>more content</em>, not more meetings.</h2>
+      <div class="built-grid">
+        <div class="built-card">
+          <span class="who">Primary &middot; DTC</span>
+          <h3>Shopify and DTC brands running paid social.</h3>
+          <p>You need more creative volume than your current team can produce. Test more hooks, ship more variations, keep a consistent posting cadence without hiring another producer.</p>
+        </div>
+        <div class="built-card">
+          <span class="who">Secondary &middot; Agencies</span>
+          <h3>UGC and social media agencies.</h3>
+          <p>Fulfill recurring short-form packages for multiple clients without manual production overhead. Treat ReelPhone as repeatable content infrastructure billed monthly.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA BLOCK -->
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <span class="section-eyebrow">Pricing</span>
+      <h2 class="section-title">Hardware. Software. Service.</h2>
+      <p class="section-sub">Buy the device. Subscribe to the service. Scale phones as content needs grow.</p>
+      <div class="pricing-grid">
+        <div class="price-card feature">
+          <span class="price-tag">First phone</span>
+          <div class="price-value">$1,997 <span class="price-unit">setup</span></div>
+          <p>Includes a four-slot rack with cooling, provisioning, and express shipping. Your first ReelPhone arrives configured and ready to start posting.</p>
+        </div>
+        <div class="price-card">
+          <span class="price-tag">Additional phones</span>
+          <div class="price-value">$1,700 <span class="price-unit">each</span></div>
+          <p>Scale capacity 90 videos at a time. Each phone is fully provisioned and slot-ready.</p>
+        </div>
+        <div class="price-card">
+          <span class="price-tag">Monthly service</span>
+          <div class="price-value">$1,750&ndash;$2,000 <span class="price-unit">/ mo per phone</span></div>
+          <p>Up to 90 UGC-style 30-second videos per month, safe posting workflows, account monitoring, and reporting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
   <section class="cta">
-    <div class="section-label" style="justify-content:center">// INIT_SEQUENCE</div>
-    <h2>Ship more <em>short-form content</em> without building a creative team.</h2>
-    <p class="lead">A dedicated device, a real posting workflow, and reporting that closes the loop. Currently booking demos with DTC brands and UGC agencies.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request&body=Company%3A%20%0AWebsite%3A%20%0AWhat%20you%27re%20trying%20to%20get%20done%3A%20%0ABest%20time%20to%20chat%3A%20">Book a demo <span class="arrow">&rarr;</span></a>
-      <a class="btn btn-ghost" href="mailto:hello@reelphone.com?subject=ReelPhone%20order%20-%20first%20device&body=Company%3A%20%0AShip-to%20address%3A%20%0AHow%20many%20phones%3A%20">Start an order <span class="arrow">&rarr;</span></a>
+    <div class="container">
+      <div class="cta-banner">
+        <h2>Start posting tomorrow. <em>With less manual content lift.</em></h2>
+        <p>A dedicated device, a real posting workflow, and reporting that closes the loop. Currently booking demos with DTC brands and UGC agencies.</p>
+        <div class="cta-row">
+          <a class="btn-light" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request">Book a demo <span class="arrow">&rarr;</span></a>
+          <a class="btn-ghost-light" href="mailto:hello@reelphone.com?subject=ReelPhone%20order%20-%20first%20device">Start an order</a>
+        </div>
+      </div>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <div class="footer-inner">
-    <span>REELPHONE.COM <span class="sep">//</span> &copy; 2026</span>
-    <span>A BEAR LLC DIGITAL PROPERTY</span>
+  <div class="container footer-inner">
+    <span class="brand">reelphone</span>
+    <span>reelphone.com &copy; 2026 &middot; a bear llc digital property</span>
   </div>
 </footer>
 
