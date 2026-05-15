@@ -350,11 +350,13 @@
     animation:pulse-travel 2.5s linear infinite;
     filter:drop-shadow(0 0 3px rgba(16,185,129,.9));
   }
-  .upload-lines .pulse-1{animation-delay:0s}
-  .upload-lines .pulse-2{animation-delay:.3s}
-  .upload-lines .pulse-3{animation-delay:.6s}
-  .upload-lines .pulse-4{animation-delay:.9s}
-  .upload-lines .pulse-5{animation-delay:1.2s}
+  /* Bottom dots fire at t=0 from icons, arrive at phone at t=2s (travel = 2.5s * 100/125).
+     Top dots fire 2s later, so each top burst is triggered by the bottom packet landing. */
+  .upload-lines .pulse-1{animation-delay:2s}
+  .upload-lines .pulse-2{animation-delay:2.3s}
+  .upload-lines .pulse-3{animation-delay:2.6s}
+  .upload-lines .pulse-4{animation-delay:2.9s}
+  .upload-lines .pulse-5{animation-delay:3.2s}
   .upload-lines .pulse-6{animation-delay:0s}
   .upload-lines .pulse-7{animation-delay:0s}
   @keyframes flow{
@@ -687,7 +689,7 @@
 </head>
 <body>
 
-<div class="version-band">v063<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v064<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -703,7 +705,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v63</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v64</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
