@@ -18,6 +18,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script>
+  // Always land at top on initial load. Strips a sticky #anchor hash and disables
+  // scroll restoration so reloads don't jump to a previously scrolled section.
+  // Subsequent in-page anchor clicks still work normally.
+  if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+  if (location.hash) {
+    history.replaceState(null, document.title, location.pathname + location.search);
+  }
+  window.scrollTo(0, 0);
+</script>
 <style>
   :root{
     --bg:#F4F6FB;
@@ -672,7 +682,7 @@
 </head>
 <body>
 
-<div class="version-band">v058<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v059<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -688,7 +698,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v58</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v59</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
