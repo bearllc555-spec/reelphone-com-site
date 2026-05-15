@@ -224,10 +224,11 @@
     transform:translateX(-50%);
     width:90%;
     animation:float-phone 9s ease-in-out infinite;
+    filter:drop-shadow(0 28px 32px rgba(15,23,42,.20));
   }
   .phone-card img{
     width:100%;height:auto;display:block;
-    mix-blend-mode:darken;
+    filter:url(#remove-phone-bg) contrast(1.06);
   }
   @keyframes float-phone{
     0%,100%{transform:translateX(-50%) translateY(0)}
@@ -613,11 +614,23 @@
 </head>
 <body>
 
-<div class="version-band">v034<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v035<span class="meta">temp build tracker - remove before launch</span></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="remove-phone-bg" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        -1.6 -1.6 -1.6 4.2 0"/>
+    </filter>
+  </defs>
+</svg>
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v34</span></a>
+    <a class="brand-mark" href="/"><span class="dot"></span>reelphone<span class="ver">v35</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
