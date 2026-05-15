@@ -1,7 +1,11 @@
 name: Deploy to Cloudflare Pages
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'feature/**'
+      - 'fix/**'
+      - 'polish/**'
   workflow_dispatch:
 jobs:
   deploy:
