@@ -340,25 +340,30 @@
   .upload-lines .line-5{animation-duration:3.5s;animation-delay:1.2s}
   .upload-lines .line-6{animation-duration:3.4s;animation-delay:1.5s}
   .upload-lines .line-7{animation-duration:3.1s;animation-delay:1.8s}
-  /* Bigger pulse dot every 3rd dash to signal active upload */
+  /* Single packet dot that travels full path from phone to icon, then pauses, then repeats */
   .upload-lines .pulse{
     stroke:#10B981;
     stroke-width:1.6;
     fill:none;
-    stroke-dasharray:0.001 14;
+    stroke-dasharray:0.001 125;
     stroke-linecap:round;
-    animation:flow 3s linear infinite;
+    animation:pulse-travel 2.5s linear infinite;
     filter:drop-shadow(0 0 3px rgba(16,185,129,.9));
   }
-  .upload-lines .pulse-2{animation-duration:3.2s;animation-delay:.3s}
-  .upload-lines .pulse-3{animation-duration:3.6s;animation-delay:.6s}
-  .upload-lines .pulse-4{animation-duration:3.3s;animation-delay:.9s}
-  .upload-lines .pulse-5{animation-duration:3.5s;animation-delay:1.2s}
-  .upload-lines .pulse-6{animation-duration:3.4s;animation-delay:1.5s}
-  .upload-lines .pulse-7{animation-duration:3.1s;animation-delay:1.8s}
+  .upload-lines .pulse-1{animation-delay:0s}
+  .upload-lines .pulse-2{animation-delay:.3s}
+  .upload-lines .pulse-3{animation-delay:.6s}
+  .upload-lines .pulse-4{animation-delay:.9s}
+  .upload-lines .pulse-5{animation-delay:1.2s}
+  .upload-lines .pulse-6{animation-delay:1.5s}
+  .upload-lines .pulse-7{animation-delay:1.8s}
   @keyframes flow{
     from{stroke-dashoffset:0}
     to{stroke-dashoffset:-4}
+  }
+  @keyframes pulse-travel{
+    from{stroke-dashoffset:0}
+    to{stroke-dashoffset:-125}
   }
 
   /* Broadcast origin dot — sits where lines emerge from phone */
@@ -682,7 +687,7 @@
 </head>
 <body>
 
-<div class="version-band">v059<span class="meta">temp build tracker - remove before launch</span></div>
+<div class="version-band">v060<span class="meta">temp build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -698,7 +703,7 @@
 
 <header class="top">
   <div class="container nav">
-    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v59</span></a>
+    <a class="brand-mark" href="/"><span class="slash">/</span>reelphone<span class="ver">v60</span></a>
     <nav class="nav-links">
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
@@ -740,15 +745,15 @@
           <path class="line line-3" d="M 50 38 C 50.5 25 49.5 12 50 4.2"/>
           <path class="line line-4" d="M 50 38 Q 62 22 74 11.55"/>
           <path class="line line-5" d="M 50 38 Q 72 28 92 23.1"/>
-          <path class="line line-6" d="M 34 95.55 Q 42 87 50 77.5"/>
-          <path class="line line-7" d="M 66 95.55 Q 58 87 50 77.5"/>
-          <path class="pulse pulse-1" d="M 50 38 Q 28 28 8 23.1"/>
-          <path class="pulse pulse-2" d="M 50 38 Q 38 22 26 11.55"/>
-          <path class="pulse pulse-3" d="M 50 38 C 50.5 25 49.5 12 50 4.2"/>
-          <path class="pulse pulse-4" d="M 50 38 Q 62 22 74 11.55"/>
-          <path class="pulse pulse-5" d="M 50 38 Q 72 28 92 23.1"/>
-          <path class="pulse pulse-6" d="M 34 95.55 Q 42 87 50 77.5"/>
-          <path class="pulse pulse-7" d="M 66 95.55 Q 58 87 50 77.5"/>
+          <path class="line line-6" d="M 50 77.5 Q 42 87 34 95.55"/>
+          <path class="line line-7" d="M 50 77.5 Q 58 87 66 95.55"/>
+          <path class="pulse pulse-1" pathLength="100" d="M 50 38 Q 28 28 8 23.1"/>
+          <path class="pulse pulse-2" pathLength="100" d="M 50 38 Q 38 22 26 11.55"/>
+          <path class="pulse pulse-3" pathLength="100" d="M 50 38 C 50.5 25 49.5 12 50 4.2"/>
+          <path class="pulse pulse-4" pathLength="100" d="M 50 38 Q 62 22 74 11.55"/>
+          <path class="pulse pulse-5" pathLength="100" d="M 50 38 Q 72 28 92 23.1"/>
+          <path class="pulse pulse-6" pathLength="100" d="M 50 77.5 Q 42 87 34 95.55"/>
+          <path class="pulse pulse-7" pathLength="100" d="M 50 77.5 Q 58 87 66 95.55"/>
         </svg>
 
         <div class="upload-orbit" aria-label="ReelPhone posts videos to Facebook, Instagram, TikTok, YouTube, and X.com">
