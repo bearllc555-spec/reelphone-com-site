@@ -15,9 +15,12 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
+      - name: Compute branch slug (slashes to dashes)
+        id: slug
+        run: echo "slug=$(echo '${{ github.ref_name }}' | tr '/' '-')" >> "$GITHUB_OUTPUT"
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=reelphone-com --branch=${{ github.ref_name }}
+          command: pages deploy . --project-name=reelphone-com --branch=${{ steps.slug.outputs.slug }}
 
