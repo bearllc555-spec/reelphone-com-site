@@ -756,6 +756,71 @@
   }
   .btn-ghost-light:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 
+  /* ----- Waitlist form ----- */
+  .waitlist-form{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;
+    max-width:560px;margin:0 auto;
+  }
+  .waitlist-form .full{grid-column:1 / -1}
+  .waitlist-form input[type="email"],
+  .waitlist-form input[type="text"]:not([name="_gotcha"]),
+  .waitlist-form input[type="tel"]{
+    width:100%;min-width:0;
+    background:#fff;color:var(--ink);
+    border:1px solid #fff;border-radius:10px;
+    padding:13px 16px;
+    font-family:inherit;font-size:14.5px;letter-spacing:-.005em;
+    outline:none;
+    box-shadow:0 12px 30px rgba(8,15,35,.18);
+    transition:box-shadow .15s ease;
+  }
+  .waitlist-form input::placeholder{color:var(--slate-dim)}
+  .waitlist-form input:focus{
+    box-shadow:0 12px 30px rgba(8,15,35,.32),0 0 0 3px rgba(255,255,255,.45);
+  }
+  .waitlist-form button{
+    grid-column:1 / -1;justify-self:center;
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:#fff;color:var(--blue-deep);
+    font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:-.005em;
+    padding:13px 26px;border-radius:10px;
+    border:1px solid #fff;cursor:pointer;
+    box-shadow:0 12px 30px rgba(8,15,35,.24);
+    transition:transform .15s ease,box-shadow .15s ease;
+    margin-top:4px;
+  }
+  .waitlist-form button:hover{transform:translateY(-1px);box-shadow:0 16px 36px rgba(8,15,35,.32)}
+  .waitlist-form button:disabled{opacity:.7;cursor:not-allowed;transform:none}
+  .waitlist-form button .arrow{transition:transform .15s ease}
+  .waitlist-form button:hover:not(:disabled) .arrow{transform:translateX(3px)}
+  @media (max-width:520px){
+    .waitlist-form{grid-template-columns:1fr}
+    .waitlist-form button{width:100%;justify-content:center}
+  }
+
+  .waitlist-microcopy{
+    margin:14px auto 0;font-size:13px;color:rgba(255,255,255,.7);
+    letter-spacing:.005em;
+  }
+  .waitlist-error{
+    display:none;max-width:520px;margin:12px auto 0;
+    font-size:13.5px;color:#FECACA;
+  }
+  .waitlist-error.active{display:block}
+  .waitlist-success{
+    display:none;max-width:520px;margin:0 auto;
+    padding:24px 28px;text-align:center;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:14px;
+  }
+  .waitlist-success.active{display:block}
+  .waitlist-success strong{
+    display:block;font-size:18px;font-weight:700;color:#fff;
+    margin-bottom:6px;letter-spacing:-.01em;
+  }
+  .waitlist-success span{font-size:14.5px;color:rgba(255,255,255,.82);line-height:1.55}
+
   /* ----- Footer ----- */
   footer{
     border-top:1px solid var(--rule);
@@ -826,7 +891,7 @@
 </head>
 <body>
 
-<div class="version-band">v088<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v089<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -848,7 +913,7 @@
       <a href="#pricing">Pricing</a>
       <a href="#built-for">Who it's for</a>
     </nav>
-    <a class="btn-nav" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request">Join waiting list</a>
+    <a class="btn-nav" href="#waitlist">Join waiting list</a>
   </div>
 </header>
 
@@ -862,7 +927,7 @@
         <h1>Send a product photo. <span class="accent">We turn it into posted UGC videos.</span></h1>
         <p class="lead">A dedicated device and service that generates UGC-style short-form videos from your product photos, posts them to your connected social accounts, and reports back with links and status.</p>
         <div class="cta-row">
-          <a class="btn-primary" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request&body=Company%3A%20%0AWebsite%3A%20%0AWhat%20you%27re%20trying%20to%20get%20done%3A%20%0ABest%20time%20to%20chat%3A%20">Join waiting list <span class="arrow">&rarr;</span></a>
+          <a class="btn-primary" href="#waitlist">Join waiting list <span class="arrow">&rarr;</span></a>
           <a class="btn-secondary" href="#how">See how it works</a>
         </div>
         <div class="hero-meta">
@@ -1124,15 +1189,26 @@
     </div>
   </section>
 
-  <!-- CTA BANNER -->
-  <section class="cta">
+  <!-- WAITLIST -->
+  <section class="cta" id="waitlist">
     <div class="container">
       <div class="cta-banner">
-        <h2>Start posting tomorrow. <em>With less manual content lift.</em></h2>
-        <p>A dedicated device, a real posting workflow, and reporting that closes the loop. Currently booking demos with DTC brands and UGC agencies.</p>
-        <div class="cta-row">
-          <a class="btn-light" href="mailto:hello@reelphone.com?subject=ReelPhone%20demo%20request">Join waiting list <span class="arrow">&rarr;</span></a>
-          <a class="btn-ghost-light" href="mailto:hello@reelphone.com?subject=ReelPhone%20order%20-%20first%20device">Start an order</a>
+        <h2>Join the waiting list. <em>We're onboarding the first batch soon.</em></h2>
+        <p>Drop your email and we'll reach out when a slot opens for your brand or agency. One message when we have something concrete - no drip, no spam.</p>
+        <form class="waitlist-form" id="waitlistForm" action="https://formspree.io/f/xrejnnqd" method="POST" novalidate>
+          <input class="full" type="email" name="email" placeholder="you@yourcompany.com (required)" required autocomplete="email" aria-label="Email address">
+          <input type="text" name="name" placeholder="Your name (optional)" autocomplete="name" aria-label="Name">
+          <input type="tel" name="phone" placeholder="Phone (optional)" autocomplete="tel" aria-label="Phone number">
+          <input class="full" type="text" name="company" placeholder="Company name (optional)" autocomplete="organization" aria-label="Company name">
+          <input type="hidden" name="source" value="reelphone.com waitlist">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" aria-hidden="true">
+          <button type="submit"><span class="btn-label">Join waiting list</span> <span class="arrow">&rarr;</span></button>
+        </form>
+        <div class="waitlist-error" id="waitlistError" role="alert">Something went wrong. Please try again or email hello@reelphone.com.</div>
+        <p class="waitlist-microcopy">No spam. You can unsubscribe anytime.</p>
+        <div class="waitlist-success" id="waitlistSuccess" role="status" aria-live="polite">
+          <strong>You're on the list.</strong>
+          <span>We'll reach out when we open a slot.</span>
         </div>
       </div>
     </div>
@@ -1146,6 +1222,39 @@
     <span>reelphone.com &copy; 2026 &middot; a bear llc digital property</span>
   </div>
 </footer>
+
+<script>
+  (function(){
+    var form = document.getElementById('waitlistForm');
+    if (!form) return;
+    var success = document.getElementById('waitlistSuccess');
+    var error = document.getElementById('waitlistError');
+    var micro = document.querySelector('.waitlist-microcopy');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var btn = form.querySelector('button[type="submit"]');
+      var label = form.querySelector('.btn-label');
+      var originalLabel = label ? label.textContent : '';
+      btn.disabled = true;
+      if (label) label.textContent = 'Sending...';
+      error.classList.remove('active');
+      fetch(form.action, {
+        method:'POST',
+        body:new FormData(form),
+        headers:{Accept:'application/json'}
+      }).then(function(r){
+        if (!r.ok) throw new Error('submit failed');
+        form.style.display = 'none';
+        if (micro) micro.style.display = 'none';
+        success.classList.add('active');
+      }).catch(function(){
+        btn.disabled = false;
+        if (label) label.textContent = originalLabel;
+        error.classList.add('active');
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
