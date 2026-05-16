@@ -298,8 +298,8 @@
   .orbit-icon.orbit-3 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2.6s}
   .orbit-icon.orbit-4 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2.9s}
   .orbit-icon.orbit-5 > svg{animation:icon-receive 2.5s cubic-bezier(.34,1.56,.64,1) infinite 3.2s}
-  .orbit-icon.orbit-6 > svg{animation:icon-launch 2.5s cubic-bezier(.34,1.56,.64,1) infinite}
-  .orbit-icon.orbit-7 > svg{animation:icon-launch 2.5s cubic-bezier(.34,1.56,.64,1) infinite 2s}
+  .orbit-icon.orbit-6 > svg{animation:icon-launch 4s cubic-bezier(.34,1.56,.64,1) infinite}
+  .orbit-icon.orbit-7 > svg{animation:icon-launch 4s cubic-bezier(.34,1.56,.64,1) infinite 2s}
   @keyframes icon-receive{
     0%,76%{scale:1;rotate:0deg}
     82%{scale:1.28;rotate:-3deg}
@@ -307,12 +307,14 @@
     94%{scale:1.06;rotate:-1deg}
     100%{scale:1;rotate:0deg}
   }
+  /* Bottom icons run on a 4s cycle; keyframe % retuned so punch peaks at
+     ~0.15s and rests by ~0.75s regardless of cycle duration. */
   @keyframes icon-launch{
     0%{scale:1;rotate:0deg}
-    6%{scale:1.22;rotate:3deg}
-    14%{scale:.94;rotate:-2deg}
-    22%{scale:1.05;rotate:1deg}
-    30%,100%{scale:1;rotate:0deg}
+    3.75%{scale:1.22;rotate:3deg}
+    8.75%{scale:.94;rotate:-2deg}
+    13.75%{scale:1.05;rotate:1deg}
+    18.75%,100%{scale:1;rotate:0deg}
   }
   .orbit-icon::before{
     content:"";
@@ -328,8 +330,8 @@
   .orbit-icon.orbit-3::before{animation:halo-receive 2.5s ease-out infinite 2.6s}
   .orbit-icon.orbit-4::before{animation:halo-receive 2.5s ease-out infinite 2.9s}
   .orbit-icon.orbit-5::before{animation:halo-receive 2.5s ease-out infinite 3.2s}
-  .orbit-icon.orbit-6::before{animation:halo-launch 2.5s ease-out infinite}
-  .orbit-icon.orbit-7::before{animation:halo-launch 2.5s ease-out infinite 2s}
+  .orbit-icon.orbit-6::before{animation:halo-launch 4s ease-out infinite}
+  .orbit-icon.orbit-7::before{animation:halo-launch 4s ease-out infinite 2s}
   @keyframes halo-receive{
     0%,75%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
     80%{opacity:1;scale:1;border-color:rgba(16,185,129,.9);border-width:2px}
@@ -337,8 +339,8 @@
   }
   @keyframes halo-launch{
     0%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
-    4%{opacity:1;scale:1;border-color:rgba(16,185,129,.9);border-width:2px}
-    28%{opacity:0;scale:1.85;border-color:rgba(16,185,129,0);border-width:1px}
+    2.5%{opacity:1;scale:1;border-color:rgba(16,185,129,.9);border-width:2px}
+    17.5%{opacity:0;scale:1.85;border-color:rgba(16,185,129,0);border-width:1px}
     100%{opacity:0;scale:.92;border-color:rgba(16,185,129,0);border-width:2px}
   }
   .orbit-icon[title]::after{
@@ -406,15 +408,16 @@
     animation:pulse-travel 2.5s linear infinite;
     filter:drop-shadow(0 0 3px rgba(16,185,129,.9));
   }
-  /* Bottom dots fire at t=0 from icons, arrive at phone at t=2s (travel = 2.5s * 100/125).
-     Top dots fire 2s later, so each top burst is triggered by the bottom packet landing. */
+  /* Top 5 stay on 2.5s pulse-travel. Bottom 2 alternate ping-pong on a 4s cycle:
+     orbit-6 fires at t=0/4/8..., orbit-7 fires at t=2/6/10..., so the second one
+     never launches until the first has landed at the phone (and vice versa). */
   .upload-lines .pulse-1{animation-delay:2s}
   .upload-lines .pulse-2{animation-delay:2.3s}
   .upload-lines .pulse-3{animation-delay:2.6s}
   .upload-lines .pulse-4{animation-delay:2.9s}
   .upload-lines .pulse-5{animation-delay:3.2s}
-  .upload-lines .pulse-6{animation-delay:0s}
-  .upload-lines .pulse-7{animation-delay:2s}
+  .upload-lines .pulse-6{stroke-dasharray:0.001 200;animation:pulse-travel-long 4s linear infinite}
+  .upload-lines .pulse-7{stroke-dasharray:0.001 200;animation:pulse-travel-long 4s linear infinite 2s}
   @keyframes flow{
     from{stroke-dashoffset:0}
     to{stroke-dashoffset:-4}
@@ -422,6 +425,10 @@
   @keyframes pulse-travel{
     from{stroke-dashoffset:0}
     to{stroke-dashoffset:-125}
+  }
+  @keyframes pulse-travel-long{
+    from{stroke-dashoffset:0}
+    to{stroke-dashoffset:-200}
   }
 
   /* Broadcast origin dot — sits where lines emerge from phone */
@@ -747,7 +754,7 @@
 </head>
 <body>
 
-<div class="version-band">v069<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v070<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
