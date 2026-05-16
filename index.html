@@ -349,22 +349,25 @@
     opacity:0;
     white-space:nowrap;pointer-events:none;
   }
-  /* Auto-cycle labels for upper 5 broadcast targets, left to right */
+  /* Top 5 labels appear at the exact moment each pulse dot arrives at its icon.
+     2.5s cycle matches pulse-travel; delays match each pulse-N delay so the
+     label hits opacity 1 at the 80% keyframe (= packet arrival moment). */
   .orbit-icon.orbit-1::after,
   .orbit-icon.orbit-2::after,
   .orbit-icon.orbit-3::after,
   .orbit-icon.orbit-4::after,
   .orbit-icon.orbit-5::after{
-    animation:label-cycle 5s linear infinite;
+    animation:label-on-arrival 2.5s ease-out infinite;
   }
-  .orbit-icon.orbit-1::after{animation-delay:0s}
-  .orbit-icon.orbit-2::after{animation-delay:1s}
-  .orbit-icon.orbit-3::after{animation-delay:2s}
-  .orbit-icon.orbit-4::after{animation-delay:3s}
-  .orbit-icon.orbit-5::after{animation-delay:4s}
-  @keyframes label-cycle{
-    0%, 20%, 100% { opacity:0; }
-    3%, 17%       { opacity:1; }
+  .orbit-icon.orbit-1::after{animation-delay:2s}
+  .orbit-icon.orbit-2::after{animation-delay:2.3s}
+  .orbit-icon.orbit-3::after{animation-delay:2.6s}
+  .orbit-icon.orbit-4::after{animation-delay:2.9s}
+  .orbit-icon.orbit-5::after{animation-delay:3.2s}
+  @keyframes label-on-arrival{
+    0%, 76% { opacity:0 }
+    82%, 95% { opacity:1 }
+    100% { opacity:0 }
   }
   /* Telegram and WhatsApp still use hover behavior */
   .orbit-icon.orbit-6:hover::after,
@@ -744,7 +747,7 @@
 </head>
 <body>
 
-<div class="version-band">v066<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v067<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
