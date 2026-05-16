@@ -163,7 +163,7 @@
   .hero-images{
     order:-1;position:relative;
     width:100%;max-width:560px;margin:0 auto;
-    min-height:420px;
+    min-height:260px;
   }
   /* 4 placeholder uplink icons in a row at the bottom, each anchored at a
      fixed % so the manifold SVG above lines them up exactly. */
@@ -773,7 +773,7 @@
     .hero-grid{grid-template-columns:1fr;gap:48px}
     .hero{padding:48px 0 64px}
     .hero-visual{order:-1;max-width:480px;margin:0 auto;width:100%}
-    .hero-images{max-width:480px;min-height:320px}
+    .hero-images{max-width:480px;min-height:200px}
     .dark-card-grid{grid-template-columns:1fr;gap:32px}
     .dark-card{padding:48px 32px}
     .steps{grid-template-columns:repeat(2,1fr)}
@@ -802,7 +802,10 @@
       min-height:auto;
       overflow:visible;
     }
-    .hero-images{width:340px;max-width:100%;min-height:240px}
+    .hero-images{width:340px;max-width:100%;min-height:160px}
+    /* Match orbit-icon mobile sizing so the placeholders read at the same scale */
+    .uplink-icon{width:42px;height:42px}
+    .uplink-manifold{height:calc(100% - 42px)}
     /* Smaller icons so they don't crowd a 340px box */
     .orbit-icon{width:42px;height:42px}
     /* On narrow widths, drop the inbound-msg below the bottom icons */
@@ -823,7 +826,7 @@
 </head>
 <body>
 
-<div class="version-band">v084<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v085<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
