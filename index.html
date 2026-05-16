@@ -371,9 +371,9 @@
     82%, 95% { opacity:1 }
     100% { opacity:0 }
   }
-  /* Telegram and WhatsApp still use hover behavior */
-  .orbit-icon.orbit-6:hover::after,
-  .orbit-icon.orbit-7:hover::after{opacity:1;transition:opacity .2s ease}
+  /* Telegram and WhatsApp labels are always visible below the phone */
+  .orbit-icon.orbit-6::after,
+  .orbit-icon.orbit-7::after{opacity:1}
 
   /* Upload signal lines */
   .upload-lines{
@@ -741,8 +741,11 @@
     }
     /* Smaller icons so they don't crowd a 340px box */
     .orbit-icon{width:42px;height:42px}
-    /* Hide auto-cycling labels on mobile - they overlap the phone */
+    /* Hide auto-cycling labels on mobile - they overlap the phone.
+       Telegram + WhatsApp labels stay visible since they sit below the phone. */
     .orbit-icon[title]::after{display:none}
+    .orbit-icon.orbit-6::after,
+    .orbit-icon.orbit-7::after{display:block}
 
     .cta-row{flex-direction:column;align-items:stretch}
     .cta-row .btn-primary,.cta-row .btn-secondary,.cta-row .btn-light,.cta-row .btn-ghost-light{
@@ -754,7 +757,7 @@
 </head>
 <body>
 
-<div class="version-band">v070<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v071<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
