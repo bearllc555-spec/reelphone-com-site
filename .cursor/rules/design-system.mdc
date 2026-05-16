@@ -1,0 +1,73 @@
+---
+description: ReelPhone visual language - canonical brand tokens for reelphone-com-site
+globs: ["**/*.css", "**/*.html"]
+---
+
+# ReelPhone design system (reelphone-com-site repo)
+
+This rule encodes the canonical brand tokens for **reelphone.com**. ReelPhone is its own product brand under Bear LLC - distinct visual identity from the SlatePress vertical-lander family. The palette leans navy + blue (vs. SlatePress's pure-white + ink + blue).
+
+The source of truth for these tokens is the `:root` block at the top of `index.html`. If they ever drift, this rule should be updated to match - the live file wins.
+
+## Canonical tokens
+
+```css
+:root{
+  /* Backgrounds */
+  --bg:#F4F6FB;             /* primary canvas - cool paper-tinted blue */
+  --bg-soft:#EDF1F8;        /* secondary surface, slightly bluer */
+  --canvas:#FFFFFF;         /* card / contrast surface (high-emphasis sections) */
+
+  /* Text */
+  --ink:#0A1023;            /* primary text - near-black with navy undertone */
+  --ink-soft:#384055;       /* secondary text */
+  --slate:#5B6479;          /* tertiary text */
+  --slate-dim:#8B93A6;      /* quaternary muted text */
+
+  /* Borders / rules - alpha-based on ink for harmonized strokes */
+  --rule:rgba(10,16,35,.07);
+  --rule-strong:rgba(10,16,35,.14);
+
+  /* Brand blue family */
+  --blue:#2563EB;           /* PRIMARY brand blue */
+  --blue-bright:#3B82F6;    /* lighter accent variant */
+  --blue-deep:#1D4ED8;      /* hover state */
+  --blue-soft:#E8EFFE;      /* tinted backgrounds, badges */
+  --blue-tint:rgba(37,99,235,.08);
+
+  /* Navy - hero / dark-mode sections */
+  --navy:#0E1830;           /* dark hero background */
+  --navy-deep:#080F23;      /* deepest navy */
+  --navy-soft:#1A2747;      /* navy with a touch of lift */
+}
+```
+
+## Type stack
+
+**Inter only.** Single sans-serif throughout. No display serif, no monospace by default.
+
+```css
+font-family: 'Inter', -apple-system, system-ui, sans-serif;
+```
+
+## Cardinal rules for reelphone-com-site
+
+- **Cool paper canvas (`--bg #F4F6FB`).** Distinguishes ReelPhone from SlatePress's pure white. The slight blue tint signals tech-forward / device product, not local-business service.
+- **Two-mode pattern.** Light sections use `--bg` / `--bg-soft` / `--canvas`. Dark hero/feature sections use `--navy` / `--navy-deep` / `--navy-soft`. Don't mix - a section is either light-mode or dark-mode end-to-end.
+- **Brand blue (`--blue` #2563EB) is the one accent.** Same blue as the SlatePress family (Bear LLC house color). On light-mode sections it appears as text/CTA accent. On dark-mode sections it pops against `--navy`.
+- **No new hex codes.** Especially: no greens, no oranges, no purples. The accent palette is blue-only.
+- **Alpha-based rules.** Border tokens (`--rule`, `--rule-strong`) are `rgba(10,16,35,...)` so they harmonize on any background tint without specific overrides per section.
+- **No gradient buttons, no carousels, no Lorem ipsum, no emoji in production UI.**
+- **Hardware product, not service.** Copy and visuals should communicate device/iPhone-rig physicality. UGC video production is the use case - phone visualizations, capture-rig diagrams, brand-content output samples are appropriate. SlatePress's "trade-vertical" aesthetic (founder badges, Foundation pricing) is wrong for this site.
+
+## Pricing
+
+ReelPhone has its own product pricing ($1,997 setup + $1,750-2,000/mo) - distinct from the SlatePress Foundation pricing. No cross-repo pricing-sync rule applies. The offer spec lives at `offer.md` in this repo.
+
+## When designing or reviewing UI in this repo
+
+Defer to the `premium-web-designer` Claude skill. When it fires:
+1. Ask "What are we designing today?"
+2. On the answer "reelphone.com" or any edit in this repo, load the tokens above.
+3. Apply universal taste principles on top.
+4. Produce code that references the brand's variable names (`--blue`, `--ink`, `--bg`, `--canvas`, `--navy`) directly - never invent token names.

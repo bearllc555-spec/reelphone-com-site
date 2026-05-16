@@ -1,0 +1,17 @@
+# Claude Code session config (per-developer, not for the repo)
+.claude/
+
+# Sandbox probe leftovers (Cowork agent test files)
+.testwrite
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor noise
+*.swp
+.idea/
+.vscode/
+
+# Wrangler local state
+.wrangler/
