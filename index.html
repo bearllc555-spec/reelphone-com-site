@@ -157,6 +157,10 @@
   .hero-copy .cta-row,.hero-copy .hero-meta{justify-content:center}
   .hero p.lead{margin-left:auto;margin-right:auto}
   .hero-visual{order:-1;max-width:560px;margin:0 auto;width:100%}
+  /* Reserved white space below the bottom-orbit (Telegram + WhatsApp) icons.
+     Placeholder for future image content; sits between hero-visual and hero-copy
+     in the single-column hero stack via flex/grid order trick. */
+  .hero-images{order:-1;width:100%;max-width:560px;margin:0 auto;min-height:420px}
   .hero h1{
     font-size:clamp(40px,5.6vw,68px);
     font-weight:700;letter-spacing:-.035em;
@@ -723,6 +727,7 @@
     .hero-grid{grid-template-columns:1fr;gap:48px}
     .hero{padding:48px 0 64px}
     .hero-visual{order:-1;max-width:480px;margin:0 auto;width:100%}
+    .hero-images{max-width:480px;min-height:320px}
     .dark-card-grid{grid-template-columns:1fr;gap:32px}
     .dark-card{padding:48px 32px}
     .steps{grid-template-columns:repeat(2,1fr)}
@@ -751,6 +756,7 @@
       min-height:auto;
       overflow:visible;
     }
+    .hero-images{width:340px;max-width:100%;min-height:240px}
     /* Smaller icons so they don't crowd a 340px box */
     .orbit-icon{width:42px;height:42px}
     /* On narrow widths, drop the inbound-msg below the bottom icons */
@@ -771,7 +777,7 @@
 </head>
 <body>
 
-<div class="version-band">v076<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v077<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -902,6 +908,7 @@
           <img src="/images/phones/phone-01.jpg" width="539" height="1063" alt="ReelPhone device broadcasting UGC videos to social platforms" loading="eager" decoding="sync" fetchpriority="high">
         </div>
       </div>
+      <div class="hero-images" aria-hidden="true"></div>
     </div>
   </section>
 
