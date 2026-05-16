@@ -842,6 +842,10 @@
     opacity:0;
     filter:drop-shadow(0 2px 6px rgba(250,204,21,.55));
   }
+  .star.finale{
+    color:#FDE047;
+    filter:drop-shadow(0 4px 14px rgba(253,224,71,.85));
+  }
   .star svg{display:block;width:100%;height:100%}
 
   /* ----- Footer ----- */
@@ -914,7 +918,7 @@
 </head>
 <body>
 
-<div class="version-band">v090<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v091<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -1268,20 +1272,25 @@
       var cx = (sRect.left - bRect.left) + sRect.width / 2;
       var cy = (sRect.top - bRect.top) + sRect.height / 2;
 
-      var count = 32;
+      var count = 30;
+      var staggerWindow = 2400;
       for (var i = 0; i < count; i++){
         var s = document.createElement('div');
-        s.className = 'star';
+        var isFinale = (i === count - 1);
+        s.className = isFinale ? 'star finale' : 'star';
         s.innerHTML = STAR_SVG;
 
+        var p = count > 1 ? i / (count - 1) : 0;
+        var delay = Math.pow(p, 2.4) * staggerWindow;
+
         var angle = (Math.PI * 2 / count) * i + (Math.random() - .5) * .55;
-        var dist = 160 + Math.random() * 180;
+        var dist = isFinale ? (90 + Math.random() * 40) : (180 + Math.random() * 180);
         var dx = Math.cos(angle) * dist;
         var dy = Math.sin(angle) * dist - 30;
-        var size = 12 + Math.random() * 18;
+        var size = isFinale ? 36 : (12 + Math.random() * 18);
         var rotStart = Math.random() * 360;
         var rotEnd = rotStart + (Math.random() > .5 ? 1 : -1) * (240 + Math.random() * 480);
-        var duration = 1200 + Math.random() * 700;
+        var duration = isFinale ? 3200 : (2300 + Math.random() * 900);
 
         s.style.left = cx + 'px';
         s.style.top = cy + 'px';
@@ -1295,11 +1304,12 @@
         if (s.animate){
           s.animate([
             { transform:'translate(0,0) rotate(' + rotStart + 'deg) scale(.3)', opacity:0 },
-            { offset:.12, transform:'translate(' + (dx*.18) + 'px,' + (dy*.18) + 'px) rotate(' + (rotStart + (rotEnd-rotStart)*.15) + 'deg) scale(1.05)', opacity:1 },
-            { offset:.7, opacity:1 },
-            { transform:'translate(' + dx + 'px,' + (dy + 140) + 'px) rotate(' + rotEnd + 'deg) scale(.5)', opacity:0 }
+            { offset:.10, transform:'translate(' + (dx*.14) + 'px,' + (dy*.14) + 'px) rotate(' + (rotStart + (rotEnd-rotStart)*.12) + 'deg) scale(1.05)', opacity:1 },
+            { offset:.78, opacity:1 },
+            { transform:'translate(' + dx + 'px,' + (dy + 160) + 'px) rotate(' + rotEnd + 'deg) scale(.5)', opacity:0 }
           ], {
             duration: duration,
+            delay: delay,
             easing: 'cubic-bezier(.22,.61,.36,1)',
             fill: 'forwards'
           });
@@ -1307,7 +1317,7 @@
           s.style.opacity = '1';
         }
       }
-      setTimeout(function(){ if (burst.parentNode) burst.parentNode.removeChild(burst); }, 2400);
+      setTimeout(function(){ if (burst.parentNode) burst.parentNode.removeChild(burst); }, staggerWindow + 3600);
     }
 
     form.addEventListener('submit', function(e){
