@@ -809,17 +809,40 @@
   .waitlist-error.active{display:block}
   .waitlist-success{
     display:none;max-width:520px;margin:0 auto;
-    padding:24px 28px;text-align:center;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.18);
+    padding:28px 28px 24px;text-align:center;
+    background:#fff;
+    border:1px solid #fff;
     border-radius:14px;
+    box-shadow:0 24px 60px rgba(8,15,35,.32);
+    transform:scale(.92);opacity:0;
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .28s ease;
   }
   .waitlist-success.active{display:block}
+  .waitlist-success.in{transform:scale(1);opacity:1}
   .waitlist-success strong{
-    display:block;font-size:18px;font-weight:700;color:#fff;
+    display:block;font-size:18px;font-weight:700;
+    color:var(--blue-deep);
     margin-bottom:6px;letter-spacing:-.01em;
   }
-  .waitlist-success span{font-size:14.5px;color:rgba(255,255,255,.82);line-height:1.55}
+  .waitlist-success span{
+    font-size:14.5px;color:var(--blue);
+    line-height:1.55;font-weight:500;
+  }
+
+  /* ----- Star burst (waitlist celebration) ----- */
+  .star-burst{
+    position:absolute;inset:0;
+    pointer-events:none;z-index:5;
+    overflow:hidden;
+  }
+  .star{
+    position:absolute;
+    color:#FACC15;
+    will-change:transform,opacity;
+    opacity:0;
+    filter:drop-shadow(0 2px 6px rgba(250,204,21,.55));
+  }
+  .star svg{display:block;width:100%;height:100%}
 
   /* ----- Footer ----- */
   footer{
@@ -891,7 +914,7 @@
 </head>
 <body>
 
-<div class="version-band">v089<span class="meta">team build tracker - remove before launch</span></div>
+<div class="version-band">v090<span class="meta">team build tracker - remove before launch</span></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -1230,6 +1253,63 @@
     var success = document.getElementById('waitlistSuccess');
     var error = document.getElementById('waitlistError');
     var micro = document.querySelector('.waitlist-microcopy');
+    var banner = form.closest('.cta-banner');
+
+    var STAR_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.47 6.42L21 9.27l-5.04 4.51L17.4 21 12 17.6 6.6 21l1.44-7.22L3 9.27l6.53-.85z"/></svg>';
+
+    function burstStars(){
+      if (!banner || !success) return;
+      var burst = document.createElement('div');
+      burst.className = 'star-burst';
+      banner.appendChild(burst);
+
+      var bRect = banner.getBoundingClientRect();
+      var sRect = success.getBoundingClientRect();
+      var cx = (sRect.left - bRect.left) + sRect.width / 2;
+      var cy = (sRect.top - bRect.top) + sRect.height / 2;
+
+      var count = 32;
+      for (var i = 0; i < count; i++){
+        var s = document.createElement('div');
+        s.className = 'star';
+        s.innerHTML = STAR_SVG;
+
+        var angle = (Math.PI * 2 / count) * i + (Math.random() - .5) * .55;
+        var dist = 160 + Math.random() * 180;
+        var dx = Math.cos(angle) * dist;
+        var dy = Math.sin(angle) * dist - 30;
+        var size = 12 + Math.random() * 18;
+        var rotStart = Math.random() * 360;
+        var rotEnd = rotStart + (Math.random() > .5 ? 1 : -1) * (240 + Math.random() * 480);
+        var duration = 1200 + Math.random() * 700;
+
+        s.style.left = cx + 'px';
+        s.style.top = cy + 'px';
+        s.style.width = size + 'px';
+        s.style.height = size + 'px';
+        s.style.marginLeft = -size/2 + 'px';
+        s.style.marginTop = -size/2 + 'px';
+
+        burst.appendChild(s);
+
+        if (s.animate){
+          s.animate([
+            { transform:'translate(0,0) rotate(' + rotStart + 'deg) scale(.3)', opacity:0 },
+            { offset:.12, transform:'translate(' + (dx*.18) + 'px,' + (dy*.18) + 'px) rotate(' + (rotStart + (rotEnd-rotStart)*.15) + 'deg) scale(1.05)', opacity:1 },
+            { offset:.7, opacity:1 },
+            { transform:'translate(' + dx + 'px,' + (dy + 140) + 'px) rotate(' + rotEnd + 'deg) scale(.5)', opacity:0 }
+          ], {
+            duration: duration,
+            easing: 'cubic-bezier(.22,.61,.36,1)',
+            fill: 'forwards'
+          });
+        } else {
+          s.style.opacity = '1';
+        }
+      }
+      setTimeout(function(){ if (burst.parentNode) burst.parentNode.removeChild(burst); }, 2400);
+    }
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
       var btn = form.querySelector('button[type="submit"]');
@@ -1247,6 +1327,12 @@
         form.style.display = 'none';
         if (micro) micro.style.display = 'none';
         success.classList.add('active');
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            success.classList.add('in');
+            burstStars();
+          });
+        });
       }).catch(function(){
         btn.disabled = false;
         if (label) label.textContent = originalLabel;
